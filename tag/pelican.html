@@ -38,14 +38,33 @@
 </footer><!-- /.post-info --><p>Rubify is a small plugin for the pelican blog, that enables Furigana support.</p>
 <div class="section" id="technical">
 <h2>Technical</h2>
-<p>I use the <a class="reference external" href="http://www.w3.org/International/articles/ruby/">XHTML Ruby Tags</a></p>
+<p>I use the <a class="reference external" href="http://www.w3.org/International/articles/ruby/">XHTML Ruby Tags</a> to display furigana. Chrome does support this (standard) notation, but unfortunately Firefox does not... Have to think about another solution in the future maybe.</p>
+<p>I use the <a class="reference external" href="http://www.reddit.com/r/LearnJapanese/wiki/subredditrules#wiki_furigana.2C_or_how_i_get_those_funny_little_characters_over_the_top_of_my_words">reddit furigana syntax</a> to markup my Kanjis with furigana.</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples</h2>
-<p>This</p>
-<blockquote>
-[漢字] (#fg かんじ)</blockquote>
-<p>will be rendered as <ruby><rb>漢字</rb><rp>(</rp><rt>かんじ</rt><rp>)</rp></p>
+<p>The pattern [漢字] (#fg かんじ) will be printed like <ruby><rb>漢字</rb><rp>(</rp><rt>かんじ</rt><rp>)</rp></p>
+</div>
+<div class="section" id="the-plugin-code">
+<h2>The "plugin" code</h2>
+<p>Some lines of Python... Use regular expressions to search for the pattern [*](#fg *) and replace it accordingly</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">pelican</span> <span class="kn">import</span> <span class="n">signals</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">rubify</span><span class="p">(</span><span class="n">sender</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sender</span><span class="o">.</span><span class="n">_content</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">"</span><span class="si">%s</span><span class="s"> rubifying..."</span> <span class="o">%</span> <span class="n">sender</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">_content</span>
+
+        <span class="n">pattern</span> <span class="o">=</span> <span class="s">r'\[([\w]*)\]\(#fg ([\w]*)\)'</span>
+        <span class="n">replacement</span> <span class="o">=</span> <span class="s">r'&lt;ruby&gt;&lt;rb&gt;\1&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;\2&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;'</span>
+
+        <span class="n">sender</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
+    <span class="n">signals</span><span class="o">.</span><span class="n">content_object_init</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">rubify</span><span class="p">)</span>
+</pre></div>
+<p>Simple, isn't it :)</p>
 </div>
                 </article>
             </aside><!-- /#featured -->
@@ -83,22 +102,22 @@
 		    <h2>#tags</h2>
 			<div id="wordcloud" style="height:140px">
 			    <span data-weight="12">   
-			        <a href="../tag/food.html">food</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="../tag/neurons.html">neurons</a>
-			    </span>
-			    <span data-weight="12">   
 			        <a href="../tag/hello-world.html">hello world</a>
 			    </span>
 			    <span data-weight="18">   
-			        <a href="../tag/photography.html">photography</a>
+			        <a href="../tag/neurons.html">neurons</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="../tag/tests.html">tests</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="../tag/pelican.html">pelican</a>
+			    </span>
+			    <span data-weight="12">   
+			        <a href="../tag/food.html">food</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="../tag/photography.html">photography</a>
 			    </span>
 			    <span data-weight="12">   
 			        <a href="../tag/workflow.html">workflow</a>
