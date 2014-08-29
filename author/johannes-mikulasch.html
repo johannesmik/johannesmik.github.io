@@ -27,7 +27,47 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="../srm-linearization.html">Linearization of the SRM Model</a></h2> 
+                    <h2><a href="../japanese-toolbox.html">Japanese Toolbox</a></h2> 
+<footer class="post-info">
+        <abbr title="2014-08-29T00:00:00">
+                Fr 29 August 2014
+        </abbr>
+                by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="../category/personal.html">Personal</a>.
+<p>tags: <a href="../tag/japanese.html">#japanese</a>&nbsp;</p>
+</footer><!-- /.post-info --><p>Japanese can be a really hard language to tackle. Luckily, there a loads of useful tools freely available online. Here I will present you my list of useful learning resources.</p>
+<div class="section" id="anki">
+<h2>Anki</h2>
+<p>Anki is a Space Repetition System (SRS). Now what is a SRS? It's similar to writing vocabulary cards manually on small cards, BUT the program automatically manages the time that the cards are reviewed based on a well-established algorithm. New cards are repeated quite often, whereas cards that you know well are repeated less often.</p>
+<p>What I like about Anki is that the cards can be customized to my needs. There is also good support for the Japanese language. For example, if I write a word in Kanji the correct writing in Hiragana is automatically supplemented.</p>
+<p>See the website: <a class="reference external" href="http://www.ankisrs.net">ankisrs.net</a></p>
+</div>
+<div class="section" id="makimono">
+<h2>Makimono</h2>
+<p>Makimono is a (English, German,...) to Japanese dictionary for Android. It also includes sample sentences from the <a class="reference external" href="http://www.tatoeba.org">tatoeba</a> project.</p>
+</div>
+<div class="section" id="fluentu">
+<h2>FluentU</h2>
+<p>One of the most difficult problems is to understand spoken Japanese. While listening to main-stream media like Youtube videos and Anime helps a lot, it's still far from efficient. Because you normally cannot understand the whole sentences, you might lose some words, or you have to use your dictionary all the time.</p>
+<p>The FluentU website comes to the rescue. It offers a small selection of recent youtube videos with subtitles. The very cool thing is that as soon as you hover over the subtitles, the video pauses, and it shows you the translation of the words you want to know.</p>
+<p>A basic account is free and with it you can use the main feature (watching videos with subtitles).</p>
+<p>Website: <a class="reference external" href="http://www.fluentu.com">fluentu.com</a></p>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="../srm-linearization.html" rel="bookmark"
+                           title="Permalink to Linearization of the SRM Model">Linearization of the SRM Model</a></h2>
+                </header>
+                <div class="entry-content">
 <footer class="post-info">
         <abbr title="2014-08-28T21:20:00">
                 Do 28 August 2014
@@ -35,109 +75,11 @@
                 by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="../category/technical.html">Technical</a>.
 <p>tags: <a href="../tag/neurons.html">#neurons</a>&nbsp;</p>
-</footer><!-- /.post-info --><p>The Spike Response Model (SRM) is a phenomenological model for spike emitting neurons. A good description can be found on <a class="reference external" href="http://www.scholarpedia.org/article/Spike-response_model">Scholarpedia SRM</a>.1</p>
-<div class="section" id="definition-of-the-srm-0-model">
-<h2>Definition of the SRM-0 model</h2>
-<p>The current of a Neuron $i$ at time $t$ is defined as follows:</p>
-<p>\begin{equation}
-u_i(t) = \eta (t - \hat{t}_i) + \sum_{j} w_{ij} \sum_{t_j^f}\epsilon_0 (t - t_j^f)
-\end{equation}</p>
-<dl class="docutils">
-<dt>Where</dt>
-<dd><ul class="first last simple">
-<li>$\hat{t}_i$ is the time of the last (outgoing) spike at neuron $i$</li>
-<li>$t_j^f$ are the outgoing spikes of neuron $j$</li>
-<li>$w_{ij}$ are the weights from neuron $j$ to neuron $i$</li>
-<li>$\eta(s)$ defines the spike and the refraction time (see below) of neuron $i$</li>
-<li>$\epsilon_0(s)$ defines the (time-dilated) spikes of incoming neurons (see below)</li>
-</ul>
-</dd>
-</dl>
-<div class="section" id="does-it-spike">
-<h3>Does it spike?</h3>
-<p>The neuron $i$ now spikes if the current $u_i (t)$ is above a certain threshold $\vartheta$</p>
-<p>\begin{equation}
-u_i(t) \ge \vartheta \rightarrow spike \\
-u_i(t) &lt; \vartheta \rightarrow no spike
-\end{equation}</p>
-</div>
-<div class="section" id="the-eta-s-function">
-<h3>The $\eta(s)$ function</h3>
-<p>The $\eta(s)$ function is defined as follows:</p>
-<p>\begin{equation}
-\eta(s) = \delta(s) - \eta_0 \exp ( - \frac{s}{\tau_m})
-\end{equation}</p>
-<p>$\delta(s)$ is the <a class="reference external" href="http://en.wikipedia.org/wiki/Dirac_delta_function">Dirac-Delta function</a>, $\tau_m$ is a membran time constant, and $\eta_0$ is a measure for the reset of the potential after a spike.</p>
-<p>TODO: Image of the function</p>
-</div>
-<div class="section" id="the-epsilon-0-function">
-<h3>The $\epsilon_0$ function</h3>
-<p>The $\epsilon_0$ function models the progress of an incoming spike's current.</p>
-<p>It is defined as follows:</p>
-<p>\begin{equation}
-\epsilon_0(s) = \frac{1}{1 - \tau_s / \tau_m}
-\left[ \exp (-\frac{s}{\tau_m}) - \exp ( -\frac{s}{\tau_s} ) \right]
-\end{equation}</p>
-<p>Where $\tau_m$ is the same membrane time constant as in the $\eta$ function and $\tau_s$ another time constant (which derives from the duration of the current).</p>
-<p>TODO: Image of the function</p>
-</div>
-<div class="section" id="summary-of-the-included-variables">
-<h3>Summary of the included variables</h3>
-<p>Which variables do we have in this model?</p>
-<p>$\tau_m$, $\tau_s$, $\vartheta$, $\eta_0$, $w$.</p>
-</div>
-</div>
-<div class="section" id="linearization">
-<h2>Linearization</h2>
-<p>This SRM model can be linearized. We can calculate the vector $u(t)$, the current at time t of all neurons. First, we make some assumptions and introduce helping variables.</p>
-<p>For the current time $t$, we want to know the current of all neurons $u(t)$ (a $n \times 1$ vector and according to this current we determine which neurons spike and which neurons do not.</p>
-<p>We assume that we know of all spikes prior to this time: $S_t_p = $, where $t_p = t - dt$. to a certain time $t_p$. We look at the next timestep $t = t_p + dt$, where our goal is to calculate the current $u(t) = u(t_p + dt)$ and update the spiketrains at time $t$.</p>
-<p>Also, we know of the $n \times n$ weight matrix:</p>
-<p>TODO</p>
-<p>The sum $\sum_{t_j^f} \epsilon(t_j^f)$ from equation TODO can be written as:</p>
-<p>\begin{equation}</p>
-<p>\end{equation}</p>
-<p>The spiketrains of all $n$ neurons for $m$ timesteps can be written as a $n \cross m$ array:</p>
-<p>S</p>
-<p>$\epsilon(t)$</p>
-<p>$$ \epsilon_t = \left[\epsilon(t), \epsilon(t-1), \ldots \epsilon(0), \ldots \epsilon(0)\right]^T $$</p>
-</div>
-<script type= "text/javascript">
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-</script>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p class="first last">I show how to linearize the SRM Model</p>
+
+                <a class="readmore" href="../srm-linearization.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
         
 
  
@@ -293,23 +235,26 @@ u_i(t) &lt; \vartheta \rightarrow no spike
 		<article>
 		    <h2>#tags</h2>
 			<div id="wordcloud" style="height:140px">
-			    <span data-weight="12">   
-			        <a href="../tag/food.html">food</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="../tag/pelican.html">pelican</a>
-			    </span>
 			    <span data-weight="18">   
 			        <a href="../tag/photography.html">photography</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="../tag/neurons.html">neurons</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="../tag/tests.html">tests</a>
 			    </span>
 			    <span data-weight="12">   
 			        <a href="../tag/workflow.html">workflow</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="../tag/neurons.html">neurons</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="../tag/pelican.html">pelican</a>
+			    </span>
+			    <span data-weight="12">   
+			        <a href="../tag/food.html">food</a>
+			    </span>
+			    <span data-weight="12">   
+			        <a href="../tag/japanese.html">japanese</a>
 			    </span>
 			</div>
 			<script>
