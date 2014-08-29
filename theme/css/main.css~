@@ -1,0 +1,310 @@
+@import url("pygment.css");
+
+body {
+	background-color: #EEE;
+	color: #000305;
+	font-size: 1.0em;
+	font-family: Arial;
+	line-height: 1.5;
+	text-align: left;
+	
+}
+
+a {
+	text-decoration: none;
+	color: #27d;
+    color: #057;
+}
+
+a:link, a:visited {
+
+}
+
+a:hover, a:active {
+	/* color: #FFF; */
+	/*background-color: #bdf; */
+    /* background-color: #aaa; */
+	/* border-radius: 0px; */
+    color: #27d;
+}
+
+.mainheader nav ul li a {
+	border-radius: 5px;
+}
+
+.section {
+    clear: both;
+}
+
+.mainheader nav a:link, .mainheader nav a:visited {
+	color: #FFFFFF;
+	display: inline-block;
+	padding: 10px 25px;
+	height: 20px;
+	font-weight: bold;
+	/* Todo: assign height */
+}
+
+.mainheader nav a:hover, .mainheader nav a:active ,
+.mainheader nav .active a:link, .mainheader nav .active a:visited{
+	background-color: #27d;
+	text-shadow: none;
+}
+
+.post-info {
+	font-size: 0.8em;
+	color: #333;
+	font-style: italic;
+}
+
+.home{
+	margin: 0 auto;
+	width: 80%;
+	clear: both;
+}
+
+.mainheader h1 {
+	margin: 10px 10px;
+	font-size: 3em;
+	line-height: 1em;
+}
+.mainheader h1 a {
+
+}
+
+.mainheader nav {
+	background-color: #aaa;
+	height: 40px;
+	border-radius: 5px;
+	%-webkit-border-radius: 5px;
+}
+
+.mainheader nav ul {
+	list-style: none;
+	margin: 0 auto;
+}
+
+.mainheader nav ul li {
+	float: left;
+	display: inline;
+}
+
+.maincontent {
+	background-color: #F00;
+	line-height: 25px;
+	border-radius: 5px;
+}
+
+.content {
+	width: 70%;
+	max-width: 900px;
+	float: left;
+	border-radius: 5px;
+}
+
+.content article {
+	background-color: #FFF;
+	border-radius: 10px;
+	padding: 10px 5%;
+	margin-top: 10px;
+}
+
+.sidebar {
+	width: 28%;
+	float: left;
+	margin: 10px 0 10px 2%;
+}
+
+.sidebar h2{
+    margin: 0;
+}
+
+.sidebar article {
+	background-color: #FFF;
+	border-radius: 10px;
+	padding: 10px 5%;
+}
+
+.sidebar ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.mainfooter {
+	width: 100%;
+	float: left;
+	text-align:center; 
+	background-color: #665;
+	border-radius: 5px;
+	margin: 2% 0;
+	height: 40px;
+}
+
+.mainfooter p {
+	color: #fff;
+	width: 90%;
+	margin: 10px auto;
+}
+
+/* Boxes: Note and Warning */
+
+p.admonition-title
+{
+  display:inline;
+  font-weight:bold;
+}
+
+p.admonition-title:after
+{
+  content: ":";
+}
+
+p.admonition-title + p
+{
+  display:inline;
+}
+
+div.note
+{
+  background-color: #eeeeee;
+  border: 1px solid #cccccc;
+  margin: 0 10px 10px;
+  padding: 7px;
+  border-radius: 10px;
+}
+
+div.warning
+{
+  background-color: #ffeeee;
+  border: 1px solid #ff6666;
+  margin: 0 10px 10px;
+  padding: 7px;
+  border-radius: 10px;
+}
+
+/* Figures */
+
+
+.figure {
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 4px;
+    float: left;
+    margin: 0 1em 1em 0;
+    box-shadow: 4px 4px 4px 0px rgba(128, 128, 128, 0.5);
+}
+.figure.align-right {
+    float: right;
+    margin: 0 0 1em 1em;
+}
+.figure.align-left {
+    float: left;
+}
+.figure img {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    float: left;
+}
+.figure p.caption {
+    margin: 0;
+    font-size: 80%;
+    padding: 4px;
+    float: left;
+    text-align: left;
+}
+.figure div.legend {
+    padding: 4px;
+    font-size: 80%;
+    color: #aaa;
+    font-style: italic;
+    float: left;
+}
+
+/* Specials */
+pre
+{
+  background-color: #eeeeee;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.tagcloud  ul{
+	list-style: none;
+	margin: 2 auto;
+}
+
+.tagcloud ul li {
+	display: inline;
+	background-color: #E5F7FF;
+	border-radius: 5px;
+	margin: 5px;
+	padding: 5px;
+}
+.tag-0 {font-size: 0.8em;}
+.tag-1 {font-size: 0.9em;}
+.tag-2 {font-size: 1.0em;}
+.tag-3 {font-size: 1.1em;}
+
+
+@media only screen and (min-width: 150px) and (max-width: 800px) {
+
+	.home {
+		width: 95%;
+	}
+
+	.mainheader h1 {
+		font-size: 1.4em;
+	}
+	
+	.mainheader nav {
+		height: 160px;
+	}
+
+	.mainheader nav ul {
+		padding-left: 0;
+	}
+
+	.mainheader nav ul li {
+		width: 100%;
+		text-align: center;
+	}
+
+	.mainheader nav a:hover, .mainheader nav a:active ,
+	.mainheader nav .active a:link, .mainheader nav .active a:visited{
+		display:block;
+	} 
+	
+	
+	.content {
+		width: 100%;
+	}
+
+	.content article {
+		padding: 3% 5%;
+		margin: 2% 0 0;
+	}
+
+	.sidebar {
+		width: 100%;
+		margin: 0;
+	}
+	
+	.sidebar  article{
+		margin: 2% 0 0;
+		padding: 2% 3%;
+	}
+
+}

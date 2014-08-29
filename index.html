@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width:device-width, initial-scale=1.0">
+				<title>johannes' blog</title>
+        <link rel="stylesheet" href="./theme/css/main.css">
+        <script type="text/javascript" src="./theme/js/jquery-1.11.1.min.js"></script>        
+        <script type="text/javascript" src="./theme/js/jquery.awesomeCloud-0.2.js"></script>
+      
+
+</head>
+
+<body id="index" class="home">
+	<header class="mainheader">
+	  <h1><a href="./index.html">johannes' blog </a></h1>
+		<nav>
+			<ul>
+					<li><a href="./pages/about.html">About me</a></li>
+					<li ><a href="./category/personal.html">Personal</a></li>
+					<li ><a href="./category/technical.html">Technical</a></li>
+		</nav>
+	</header>
+	<div class="content">
+   
+        
+
+            <aside id="featured" class="body">
+                <article>
+                    <h2><a href="./srm-linearization.html">Linearization of the SRM Model</a></h2> 
+<footer class="post-info">
+        <abbr title="2014-08-28T21:20:00">
+                Do 28 August 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/neurons.html">#neurons</a>&nbsp;</p>
+</footer><!-- /.post-info --><p>The Spike Response Model (SRM) is a phenomenological model for spike emitting neurons. A good description can be found on <a class="reference external" href="http://www.scholarpedia.org/article/Spike-response_model">Scholarpedia SRM</a>.1</p>
+<div class="section" id="definition-of-the-srm-0-model">
+<h2>Definition of the SRM-0 model</h2>
+<p>The current of a Neuron $i$ at time $t$ is defined as follows:</p>
+<p>\begin{equation}
+u_i(t) = \eta (t - \hat{t}_i) + \sum_{j} w_{ij} \sum_{t_j^f}\epsilon_0 (t - t_j^f)
+\end{equation}</p>
+<dl class="docutils">
+<dt>Where</dt>
+<dd><ul class="first last simple">
+<li>$\hat{t}_i$ is the time of the last (outgoing) spike at neuron $i$</li>
+<li>$t_j^f$ are the outgoing spikes of neuron $j$</li>
+<li>$w_{ij}$ are the weights from neuron $j$ to neuron $i$</li>
+<li>$\eta(s)$ defines the spike and the refraction time (see below) of neuron $i$</li>
+<li>$\epsilon_0(s)$ defines the (time-dilated) spikes of incoming neurons (see below)</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="does-it-spike">
+<h3>Does it spike?</h3>
+<p>The neuron $i$ now spikes if the current $u_i (t)$ is above a certain threshold $\vartheta$</p>
+<p>\begin{equation}
+u_i(t) \ge \vartheta \rightarrow spike \\
+u_i(t) &lt; \vartheta \rightarrow no spike
+\end{equation}</p>
+</div>
+<div class="section" id="the-eta-s-function">
+<h3>The $\eta(s)$ function</h3>
+<p>The $\eta(s)$ function is defined as follows:</p>
+<p>\begin{equation}
+\eta(s) = \delta(s) - \eta_0 \exp ( - \frac{s}{\tau_m})
+\end{equation}</p>
+<p>$\delta(s)$ is the <a class="reference external" href="http://en.wikipedia.org/wiki/Dirac_delta_function">Dirac-Delta function</a>, $\tau_m$ is a membran time constant, and $\eta_0$ is a measure for the reset of the potential after a spike.</p>
+<p>TODO: Image of the function</p>
+</div>
+<div class="section" id="the-epsilon-0-function">
+<h3>The $\epsilon_0$ function</h3>
+<p>The $\epsilon_0$ function models the progress of an incoming spike's current.</p>
+<p>It is defined as follows:</p>
+<p>\begin{equation}
+\epsilon_0(s) = \frac{1}{1 - \tau_s / \tau_m}
+\left[ \exp (-\frac{s}{\tau_m}) - \exp ( -\frac{s}{\tau_s} ) \right]
+\end{equation}</p>
+<p>Where $\tau_m$ is the same membrane time constant as in the $\eta$ function and $\tau_s$ another time constant (which derives from the duration of the current).</p>
+<p>TODO: Image of the function</p>
+</div>
+<div class="section" id="summary-of-the-included-variables">
+<h3>Summary of the included variables</h3>
+<p>Which variables do we have in this model?</p>
+<p>$\tau_m$, $\tau_s$, $\vartheta$, $\eta_0$, $w$.</p>
+</div>
+</div>
+<div class="section" id="linearization">
+<h2>Linearization</h2>
+<p>This SRM model can be linearized.</p>
+<p>First let me introduce some helping variables:</p>
+<p>$$ \epsilon_t = \left[\epsilon(t), \epsilon(t-1), \ldots \epsilon(0), \ldots \epsilon(0)\right]^T $$</p>
+</div>
+<script type= "text/javascript">
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+</script>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./rubify.html" rel="bookmark"
+                           title="Permalink to Rubify">Rubify</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-08-17T00:50:00">
+                So 17 August 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/pelican.html">#pelican</a>&nbsp;<a href="./tag/tests.html">#tests</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">I wrote a small plugin to enable furigana support in Pelican</p>
+
+                <a class="readmore" href="./rubify.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./nightsession-hackerbruecke.html" rel="bookmark"
+                           title="Permalink to Nightsession at Hackerbruecke">Nightsession at Hackerbruecke</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-07-02T00:00:00">
+                Mi 02 Juli 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/personal.html">Personal</a>.
+<p>tags: <a href="./tag/photography.html">#photography</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">Some of the coolest photos of a nightsession</p>
+
+                <a class="readmore" href="./nightsession-hackerbruecke.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./pelican-workflow.html" rel="bookmark"
+                           title="Permalink to My Pelican Workflow">My Pelican Workflow</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-05-16T00:00:00">
+                Fr 16 Mai 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/pelican.html">#pelican</a>&nbsp;<a href="./tag/workflow.html">#workflow</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">Description of my Pelican workflow</p>
+
+                <a class="readmore" href="./pelican-workflow.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./neuron-facts.html" rel="bookmark"
+                           title="Permalink to Neuron facts">Neuron facts</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-05-15T10:20:00">
+                Do 15 Mai 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/neurons.html">#neurons</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">In this blogpost I write some tests</p>
+
+                <a class="readmore" href="./neuron-facts.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./rest-tests.html" rel="bookmark"
+                           title="Permalink to Some ReST Tests">Some ReST Tests</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-05-15T10:20:00">
+                Do 15 Mai 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/tests.html">#tests</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">In this blogpost I write some tests</p>
+
+                <a class="readmore" href="./rest-tests.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./first-kk-delivery.html" rel="bookmark"
+                           title="Permalink to My first Kartoffelkombinat delivery">My first Kartoffelkombinat delivery</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-05-15T00:00:00">
+                Do 15 Mai 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/personal.html">Personal</a>.
+<p>tags: <a href="./tag/food.html">#food</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">My intentions of registering at Kartoffelkombinat, and description of my first delivery.</p>
+
+                <a class="readmore" href="./first-kk-delivery.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./hello-world.html" rel="bookmark"
+                           title="Permalink to Hello World">Hello World</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-05-10T10:20:00">
+                Sa 10 Mai 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/personal.html">Personal</a>.
+<p>tags: <a href="./tag/hello-world.html">#hello world</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">My first post.</p>
+
+                <a class="readmore" href="./hello-world.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="./my-first-photo-newspaper.html" rel="bookmark"
+                           title="Permalink to My first published photo!">My first published photo!</a></h2>
+                </header>
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-03-10T00:00:00">
+                Mo 10 März 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/personal.html">Personal</a>.
+<p>tags: <a href="./tag/photography.html">#photography</a>&nbsp;</p>
+</footer><!-- /.post-info -->                <p class="first last">I just had my first photo in a German newspaper released. Yea! :)</p>
+
+                <a class="readmore" href="./my-first-photo-newspaper.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+            </ol><!-- /#posts-list -->
+            </section><!-- /#content -->
+	</div>
+
+	<aside class="sidebar">
+		<article>
+		    <h2>#tags</h2>
+			<div id="wordcloud" style="height:140px">
+			    <span data-weight="12">   
+			        <a href="./tag/workflow.html">workflow</a>
+			    </span>
+			    <span data-weight="12">   
+			        <a href="./tag/food.html">food</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="./tag/tests.html">tests</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="./tag/pelican.html">pelican</a>
+			    </span>
+			    <span data-weight="12">   
+			        <a href="./tag/hello-world.html">hello world</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="./tag/neurons.html">neurons</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="./tag/photography.html">photography</a>
+			    </span>
+			</div>
+			<script>
+                var settings = {
+                    "size" : {
+                        "grid" : 8,
+                        "factor" : 0,
+                        "normalize" : true
+                    },
+                    "color" : {
+                        "start" : "rgb(31, 157, 212)",
+                        "end" : "rgb(0, 85, 119)"
+                    },
+                    "options" : {
+                        "color" : "gradient",
+                        "printMultiplier" : 3
+                    },
+                    "font" : "Helvetica, sans-serif",
+                    "shape" : "shape"
+                }
+                $( "#wordcloud" ).awesomeCloud( settings );
+            </script>
+		</article>
+	</aside>
+
+	<aside class="sidebar">
+		<article>
+			<h2>friends</h2>
+			<ul>
+				    <li><a href="http://www.munichtracers.de/">Munichtracers Munich Parkour</a></li>
+				    <li><a href="http://muenchen.methodenaturelle.de/">Méthode Naturelle in Munich</a></li>
+				    <li><a href="http://www.ashigaru.de">Ashigaru Parkour</a></li>
+			</ul>
+		</article>
+	</aside>
+	<footer class="mainfooter">
+		<p>&copy; 2013; powered by <a style="color:#fff;" href="http://www.python.org">python</a> and <a style="color:#fff;" href="http://blog.getpelican.com/">pelican</a></p>
+	</footer>
+</body>
+</html>
