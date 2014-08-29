@@ -77,8 +77,18 @@ $ pip install ghp-import
 <blockquote>
 $ pip install pillow beautifulsoup4</blockquote>
 </div>
-<div class="section" id="git-workflow">
-<h2>Git Workflow</h2>
+<div class="section" id="new-git-workflow">
+<h2>New Git Workflow</h2>
+<p>Because the ghpages was somehow putting files in the blog directory I changed the workflow a little bit.</p>
+<p>I initialised a new git repo in the output directory, so changes get pushed like this:</p>
+<blockquote>
+$ cd output
+$ git commit -a
+$ git push origin
+$ (git push origin --force)</blockquote>
+</div>
+<div class="section" id="old-git-workflow">
+<h2>Old Git Workflow</h2>
 <p>Using git userpages, I set up a new git repository called <tt class="docutils literal">username.github.io</tt>. Then I created a new git repo in my blog directory and set it up.:</p>
 <pre class="literal-block">
 $ cd workspace/blog
@@ -135,25 +145,25 @@ $ git push origin gh-pages:master
 		    <h2>#tags</h2>
 			<div id="wordcloud" style="height:140px">
 			    <span data-weight="12">   
+			        <a href="./tag/food.html">food</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="./tag/neurons.html">neurons</a>
+			    </span>
+			    <span data-weight="12">   
 			        <a href="./tag/workflow.html">workflow</a>
 			    </span>
 			    <span data-weight="12">   
-			        <a href="./tag/food.html">food</a>
+			        <a href="./tag/hello-world.html">hello world</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="./tag/photography.html">photography</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="./tag/tests.html">tests</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="./tag/pelican.html">pelican</a>
-			    </span>
-			    <span data-weight="12">   
-			        <a href="./tag/hello-world.html">hello world</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="./tag/neurons.html">neurons</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="./tag/photography.html">photography</a>
 			    </span>
 			</div>
 			<script>

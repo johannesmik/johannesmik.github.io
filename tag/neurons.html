@@ -89,8 +89,17 @@ u_i(t) &lt; \vartheta \rightarrow no spike
 </div>
 <div class="section" id="linearization">
 <h2>Linearization</h2>
-<p>This SRM model can be linearized.</p>
-<p>First let me introduce some helping variables:</p>
+<p>This SRM model can be linearized. We can calculate the vector $u(t)$, the current at time t of all neurons. First, we make some assumptions and introduce helping variables.</p>
+<p>For the current time $t$, we want to know the current of all neurons $u(t)$ (a $n \times 1$ vector and according to this current we determine which neurons spike and which neurons do not.</p>
+<p>We assume that we know of all spikes prior to this time: $S_t_p = $, where $t_p = t - dt$. to a certain time $t_p$. We look at the next timestep $t = t_p + dt$, where our goal is to calculate the current $u(t) = u(t_p + dt)$ and update the spiketrains at time $t$.</p>
+<p>Also, we know of the $n \times n$ weight matrix:</p>
+<p>TODO</p>
+<p>The sum $\sum_{t_j^f} \epsilon(t_j^f)$ from equation TODO can be written as:</p>
+<p>\begin{equation}</p>
+<p>\end{equation}</p>
+<p>The spiketrains of all $n$ neurons for $m$ timesteps can be written as a $n \cross m$ array:</p>
+<p>S</p>
+<p>$\epsilon(t)$</p>
 <p>$$ \epsilon_t = \left[\epsilon(t), \epsilon(t-1), \ldots \epsilon(0), \ldots \epsilon(0)\right]^T $$</p>
 </div>
 <script type= "text/javascript">
@@ -159,25 +168,25 @@ u_i(t) &lt; \vartheta \rightarrow no spike
 		    <h2>#tags</h2>
 			<div id="wordcloud" style="height:140px">
 			    <span data-weight="12">   
+			        <a href="../tag/food.html">food</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="../tag/neurons.html">neurons</a>
+			    </span>
+			    <span data-weight="12">   
 			        <a href="../tag/workflow.html">workflow</a>
 			    </span>
 			    <span data-weight="12">   
-			        <a href="../tag/food.html">food</a>
+			        <a href="../tag/hello-world.html">hello world</a>
+			    </span>
+			    <span data-weight="18">   
+			        <a href="../tag/photography.html">photography</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="../tag/tests.html">tests</a>
 			    </span>
 			    <span data-weight="18">   
 			        <a href="../tag/pelican.html">pelican</a>
-			    </span>
-			    <span data-weight="12">   
-			        <a href="../tag/hello-world.html">hello world</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="../tag/neurons.html">neurons</a>
-			    </span>
-			    <span data-weight="18">   
-			        <a href="../tag/photography.html">photography</a>
 			    </span>
 			</div>
 			<script>
