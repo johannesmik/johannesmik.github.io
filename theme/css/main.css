@@ -1,7 +1,7 @@
 @import url("pygment.css");
 
 body {
-	background-color: #EEE;
+	background-color: #FFF;
 	color: #000305;
 	font-size: 1.0em;
 	font-family: Arial;
@@ -13,7 +13,8 @@ body {
 a {
 	text-decoration: none;
 	color: #27d;
-    color: #057;
+    /*color: #057; */
+    color: #8DA1B8;
 }
 
 a:link, a:visited {
@@ -73,7 +74,7 @@ a:hover, a:active {
 }
 
 .mainheader nav {
-	background-color: #aaa;
+	background-color: #8DA1B8;
 	height: 40px;
 	border-radius: 5px;
 	%-webkit-border-radius: 5px;
@@ -98,8 +99,8 @@ a:hover, a:active {
 .content {
 	width: 100%;
 	max-width: 900px;
-	float: left;
 	border-radius: 5px;
+	margin: 0 auto;
 }
 
 .content article {
@@ -135,7 +136,7 @@ a:hover, a:active {
 	width: 100%;
 	float: left;
 	text-align:center; 
-	background-color: #aaa;
+	background-color: #8DA1B8;
 	border-radius: 5px;
 	margin: 2% 0;
 	height: 40px;
