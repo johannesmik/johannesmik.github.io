@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width:device-width, initial-scale=1.0">
+				<title>SRM-Neurons: Introducing the SRM Model (Part 1)</title>
+        <link rel="stylesheet" href="./theme/css/main.css">
+      
+
+</head>
+
+<body id="index" class="home">
+	<header class="mainheader">
+	  <h1><a href="./index.html">johannes' blog </a></h1>
+		<nav>
+			<ul>
+					<li><a href="./pages/about.html">About me</a></li>
+					<li ><a href="./category/personal.html">Personal</a></li>
+					<li class="active"><a href="./category/technical.html">Technical</a></li>
+		</nav>
+	</header>
+	<div class="content">
+<article>
+    <header>
+      <h2>
+        <a href="./srm-intro.html" rel="bookmark"
+           title="Permalink to SRM-Neurons: Introducing the SRM Model (Part 1)">SRM-Neurons: Introducing the SRM Model (Part 1)</a></h2>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2014-08-27T16:20:00">
+                Wed 27 August 2014
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/neurons.html">#neurons</a>&nbsp;</p>
+</footer><!-- /.post-info -->      <p>The Spike Response Model (SRM) is a phenomenological model for spike emitting neurons. A good description can be found on <a class="reference external" href="http://www.scholarpedia.org/article/Spike-response_model">Scholarpedia SRM</a>.1</p>
+<div class="section" id="definition-of-the-srm-0-model">
+<h2>Definition of the SRM-0 model</h2>
+<p>The current of a Neuron $i$ at time $t$ is defined as follows:</p>
+<p>\begin{equation}
+u_i(t) = \eta (t - \hat{t}_i) + \sum_{j} w_{ij} \sum_{t_j^f}\epsilon_0 (t - t_j^f)
+\end{equation}</p>
+<dl class="docutils">
+<dt>Where</dt>
+<dd><ul class="first last simple">
+<li>$\hat{t}_i$ is the time of the last (outgoing) spike at neuron $i$</li>
+<li>$t_j^f$ are the outgoing spikes of neuron $j$</li>
+<li>$w_{ij}$ are the weights from neuron $j$ to neuron $i$</li>
+<li>$\eta(s)$ defines the spike and the refraction time (see below) of neuron $i$</li>
+<li>$\epsilon_0(s)$ defines the (time-dilated) spikes of incoming neurons (see below)</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="does-it-spike">
+<h3>Does it spike?</h3>
+<p>The neuron $i$ now spikes if the current $u_i (t)$ is above a certain threshold $\vartheta$</p>
+<p>\begin{equation}
+u_i(t) \ge \vartheta \rightarrow spike \\
+u_i(t) &lt; \vartheta \rightarrow no spike
+\end{equation}</p>
+</div>
+<div class="section" id="the-eta-s-function">
+<h3>The $\eta(s)$ function</h3>
+<p>The $\eta(s)$ function is defined as follows:</p>
+<p>\begin{equation}
+\eta(s) = \delta(s) - \eta_0 \exp ( - \frac{s}{\tau_m})
+\end{equation}</p>
+<p>$\delta(s)$ is the <a class="reference external" href="http://en.wikipedia.org/wiki/Dirac_delta_function">Dirac-Delta function</a>, $\tau_m$ is a membran time constant, and $\eta_0$ is a measure for the reset of the potential after a spike.</p>
+<div class="figure" style="width: 812px; height: auto; max-width: 100%;">
+<img alt="The eta function" src="./images/neurons_eta_function.jpeg" style="width: 812px; height: auto; max-width: 100%;"/>
+<p class="caption">The $\eta(s)$ function for $\eta_{reset} = 50$ and $\tau_m = 30$.</p>
+</div>
+<p>As you can see, the function generates a spike at time $s = 0$, and then one time-step later it takes the reset value $\eta_{reset}$, from which it exponantially 'regenerates', depending on $\t_{membran}$. With this attribute we can model the spike refractory time.</p>
+</div>
+<div class="section" id="the-epsilon-0-function">
+<h3>The $\epsilon_0$ function</h3>
+<p>The $\epsilon_0$ function models the progress of an incoming spike's current.</p>
+<p>It is defined as follows:</p>
+<p>\begin{equation}
+\epsilon_0(s) = \frac{1}{1 - \tau_s / \tau_m}
+\left[ \exp (-\frac{s}{\tau_m}) - \exp ( -\frac{s}{\tau_s} ) \right]
+\end{equation}</p>
+<p>Where $\tau_m$ is the same membrane time constant as in the $\eta$ function and $\tau_s$ another time constant (which derives from the duration of the current).</p>
+<div class="figure" style="width: 812px; height: auto; max-width: 100%;">
+<img alt="The epsilon function" src="./images/neurons_epsilon_function.jpeg" style="width: 812px; height: auto; max-width: 100%;"/>
+<p class="caption">The $\epsilon(s)$ function for $\tau_c = 20$ and $\tau_m = 30$</p>
+</div>
+<p>As you can see the function peaks at around 20 milliseconds (more general, at around $\tau_c$. Roughly said, this function models the time-delay on the axons.</p>
+</div>
+<div class="section" id="summary-of-the-included-variables">
+<h3>Summary of the included variables</h3>
+<p>Which variables do we have in this model?</p>
+<p>$\tau_m$, $\tau_s$, $\vartheta$, $\eta_0$, $w$.</p>
+</div>
+</div>
+<script type= "text/javascript">
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+</script>
+
+    </div><!-- /.entry-content -->
+</article>
+	</div>
+
+
+	<footer class="mainfooter">
+		<p>&copy; 2013; powered by <a style="color:#fff;" href="http://www.python.org">python</a> and <a style="color:#fff;" href="http://blog.getpelican.com/">pelican</a></p>
+	</footer>
+</body>
+</html>
