@@ -34,6 +34,12 @@
 		in category <a href="../category/technical.html">Technical</a>.
 <p>tags: <a href="../tag/git.html">#git</a>&nbsp;<a href="../tag/bash.html">#bash</a>&nbsp;</p>
 </footer><!-- /.post-info --><p>In this post I'll list all my often used commands, that I tend to forget from time to time.</p>
+<div class="section" id="in-bash">
+<h2>In Bash</h2>
+<p>To find 'surface' in all pdf's in a directory</p>
+<div class="highlight"><pre><span class="nv">$ </span>find . -name <span class="s1">'*.pdf'</span> -exec sh -c <span class="s1">'pdftotext "{}" - | grep --with-filename --label="{}" --color "truncated surface"'</span> <span class="se">\;</span>
+</pre></div>
+</div>
 <div class="section" id="in-git">
 <h2>In Git</h2>
 <p>This one let's me interactively add or skip lines of a file to a git commit.</p>
@@ -45,8 +51,41 @@
 <p>Substitute foo with bar in all lines (%s), but ask for confirmation (c):</p>
 <div class="highlight"><pre>:%s/foo/bar/gc
 </pre></div>
+<p>To paste from the system clipboard:</p>
+<div class="highlight"><pre><span class="err">"</span>*p
+</pre></div>
 <p>That's it for the moment, sorry :)</p>
 </div>
+<script type= "text/javascript">
+    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+        var mathjaxscript = document.createElement('script');
+        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+        mathjaxscript.type = 'text/javascript';
+        mathjaxscript.src = 'https:' == document.location.protocol
+                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+            "MathJax.Hub.Config({" +
+            "    config: ['MMLorHTML.js']," +
+            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+            "    displayAlign: 'center'," +
+            "    displayIndent: '0em'," +
+            "    showMathMenu: true," +
+            "    tex2jax: { " +
+            "        inlineMath: [ ['$','$'] ], " +
+            "        displayMath: [ ['$$','$$'] ]," +
+            "        processEscapes: true," +
+            "        preview: 'TeX'," +
+            "    }, " +
+            "    'HTML-CSS': { " +
+            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+            "    } " +
+            "}); ";
+        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+    }
+</script>
                 </article>
             </aside><!-- /#featured -->
             </ol><!-- /#posts-list -->
