@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width:device-width, initial-scale=1.0">
+				<title>Often used commands</title>
+        <link rel="stylesheet" href="./theme/css/main.css">
+      
+
+</head>
+
+<body id="index" class="home">
+	<header class="mainheader">
+	  <h1><a href="./index.html">johannes' blog </a></h1>
+		<nav>
+			<ul>
+					<li><a href="./pages/about.html">About me</a></li>
+					<li ><a href="./category/personal.html">Personal</a></li>
+					<li class="active"><a href="./category/technical.html">Technical</a></li>
+		</nav>
+	</header>
+	<div class="content">
+<article>
+    <header>
+      <h2>
+        <a href="./numpy-yaml.html" rel="bookmark"
+           title="Permalink to Often used commands">Often used commands</a></h2>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr title="2015-07-19T14:20:00">
+                Sun 19 July 2015
+        </abbr>
+                by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
+		in category <a href="./category/technical.html">Technical</a>.
+<p>tags: <a href="./tag/numpy.html">#numpy</a>&nbsp;<a href="./tag/yaml.html">#yaml</a>&nbsp;<a href="./tag/python.html">#python</a>&nbsp;</p>
+</footer><!-- /.post-info -->      <p>The problem when dumping a numpy.float with yaml:</p>
+<div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+<p>gives us the following error :python:'TypeError: data type not understood', because 'a' is of type :python:'numpy.float32'.</p>
+<p>One solution is to add a representer to yaml:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">numpy_generic_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asscalar</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">numpy_generic_representer</span><span class="p">)</span>
+</pre></div>
+<p>We use :python:'np.generic' instead of 'np.float32' because it's a base class for all scalar classes like :python:'float32' or :python:'float16'. The function :python:'data.item()' then returns a standard Python scalar.</p>
+<p>Similar we can add a representer for numpy arrays:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">array_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">represent_sequence</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">array_representer</span><span class="p">)</span>
+</pre></div>
+<p>Where we use the :python:'tolist()' method to convert the array to a list, and then represent it as a sequence with a "!array" tag in front of it.</p>
+
+    </div><!-- /.entry-content -->
+</article>
+	</div>
+
+
+	<footer class="mainfooter">
+		<p><small>&copy; 2013 - 2015, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
+	</footer>
+</body>
+</html>

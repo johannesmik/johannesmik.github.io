@@ -39,6 +39,12 @@
 <p>To find 'surface' in all pdf's in a directory</p>
 <div class="highlight"><pre><span class="nv">$ </span>find . -name <span class="s1">'*.pdf'</span> -exec sh -c <span class="s1">'pdftotext "{}" - | grep --with-filename --label="{}" --color "truncated surface"'</span> <span class="se">\;</span>
 </pre></div>
+<p>Spell correction:</p>
+<div class="highlight"><pre><span class="nv">$ </span>aspell check textfile.md
+</pre></div>
+<p>Renaming a lot of files. We make use of bash's variable substitution <code class="bash"><span class="k">${</span><span class="nv">var</span><span class="p">/Pattern/Replacement</span><span class="k">}</span></code>. For example like this:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="k">for </span>i in *.txt; <span class="k">do </span>mv <span class="s2">"${i}"</span> <span class="s2">"{i/.txt/_newtext.txt}"</span>; <span class="k">done</span>
+</pre></div>
 </div>
 <div class="section" id="in-git">
 <h2>In Git</h2>
@@ -56,7 +62,7 @@
 </pre></div>
 <p>That's it for the moment, sorry :)</p>
 </div>
-<script type= "text/javascript">
+<script type="text/javascript">
     if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
         var mathjaxscript = document.createElement('script');
         mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';

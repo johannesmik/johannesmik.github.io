@@ -25,73 +25,59 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="../often-used--commands.html">Often used commands</a></h2> 
+                    <h2><a href="../numpy-yaml.html">Often used commands</a></h2> 
 <footer class="post-info">
-        <abbr title="2015-07-07T10:20:00">
-                Tue 07 July 2015
+        <abbr title="2015-07-19T14:20:00">
+                Sun 19 July 2015
         </abbr>
                 by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="../category/technical.html">Technical</a>.
-<p>tags: <a href="../tag/git.html">#git</a>&nbsp;<a href="../tag/bash.html">#bash</a>&nbsp;</p>
-</footer><!-- /.post-info --><p>In this post I'll list all my often used commands, that I tend to forget from time to time.</p>
-<div class="section" id="in-bash">
-<h2>In Bash</h2>
-<p>To find 'surface' in all pdf's in a directory</p>
-<div class="highlight"><pre><span class="nv">$ </span>find . -name <span class="s1">'*.pdf'</span> -exec sh -c <span class="s1">'pdftotext "{}" - | grep --with-filename --label="{}" --color "truncated surface"'</span> <span class="se">\;</span>
+<p>tags: <a href="../tag/numpy.html">#numpy</a>&nbsp;<a href="../tag/yaml.html">#yaml</a>&nbsp;<a href="../tag/python.html">#python</a>&nbsp;</p>
+</footer><!-- /.post-info --><p>The problem when dumping a numpy.float with yaml:</p>
+<div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
-</div>
-<div class="section" id="in-git">
-<h2>In Git</h2>
-<p>This one let's me interactively add or skip lines of a file to a git commit.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git add -p
+<p>gives us the following error :python:'TypeError: data type not understood', because 'a' is of type :python:'numpy.float32'.</p>
+<p>One solution is to add a representer to yaml:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">numpy_generic_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asscalar</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">numpy_generic_representer</span><span class="p">)</span>
 </pre></div>
-</div>
-<div class="section" id="in-vim">
-<h2>In Vim</h2>
-<p>Substitute foo with bar in all lines (%s), but ask for confirmation (c):</p>
-<div class="highlight"><pre>:%s/foo/bar/gc
+<p>We use :python:'np.generic' instead of 'np.float32' because it's a base class for all scalar classes like :python:'float32' or :python:'float16'. The function :python:'data.item()' then returns a standard Python scalar.</p>
+<p>Similar we can add a representer for numpy arrays:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">array_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">represent_sequence</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">array_representer</span><span class="p">)</span>
 </pre></div>
-<p>To paste from the system clipboard:</p>
-<div class="highlight"><pre><span class="err">"</span>*p
-</pre></div>
-<p>That's it for the moment, sorry :)</p>
-</div>
-<script type= "text/javascript">
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-</script>
+<p>Where we use the :python:'tolist()' method to convert the array to a list, and then represent it as a sequence with a "!array" tag in front of it.</p>
                 </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="../often-used--commands.html" rel="bookmark"
+                           title="Permalink to Often used commands">Often used commands</a></h2>
+                </header>
+                <div class="entry-content">
+                <footer class="post-info">
+                    <abbr title="2015-07-07T10:20:00">
+                        Tue 07 July 2015
+                    </abbr>
+                    in category <a href="../category/technical.html">Technical</a>.
+                </footer>        
+                <p class="first last">I list all my often used commands</p>
+
+                </div><!-- /.entry-content -->
+            </article></li>
         
 
  
