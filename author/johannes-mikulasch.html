@@ -40,18 +40,25 @@
 <p>gives us the following error <code class="python-inline python"><span class="ne">TypeError</span><span class="p">:</span> <span class="n">data</span> <span class="nb">type</span> <span class="ow">not</span> <span class="n">understood</span></code>, because 'a' is of type <code class="python-inline python"><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span></code>.</p>
 <p>One solution is to add a representer to yaml:</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">numpy_generic_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_scalar</span><span class="p">(</span><span class="s">'tag:yaml.org,2002:float'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
 
 <span class="n">yaml</span><span class="o">.</span><span class="n">add_multi_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">numpy_generic_representer</span><span class="p">)</span>
 </pre></div>
 <p>We use <code class="python-inline python"><span class="n">np</span><span class="o">.</span><span class="n">generic</span></code> instead of <code class="python-inline python"><span class="n">np</span><span class="o">.</span><span class="n">float32</span></code> because it's a base class for all scalar classes like <code class="python-inline python"><span class="n">float32</span></code> or <code class="python-inline python"><span class="n">float16</span></code>. The function <code class="python-inline python"><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></code> then returns a standard Python scalar.</p>
 <p>Similar we can add a representer for numpy arrays:</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">array_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">represent_sequence</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_sequence</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
 
 <span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">array_representer</span><span class="p">)</span>
 </pre></div>
 <p>Where we use the <code class="python-inline python"><span class="n">tolist</span><span class="p">()</span></code> method to convert the array to a list, and then represent it as a sequence with a "!array" tag in front of it.</p>
+<p>When we load the file we can also construct arrays using:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">array_constructor</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">construct_sequence</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_constructor</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">array_constructor</span><span class="p">)</span>
+</pre></div>
                 </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
