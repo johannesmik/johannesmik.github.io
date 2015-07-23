@@ -25,46 +25,42 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="../numpy-yaml.html">Numpy and Yaml</a></h2> 
+                    <h2><a href="../self-introduction.html">Self Introduction in Japanese</a></h2> 
 <footer class="post-info">
-        <abbr title="2015-07-19T14:20:00">
-                Sun 19 July 2015
+        <abbr title="2015-07-24T00:00:00">
+                Fri 24 July 2015
         </abbr>
                 by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
-		in category <a href="../category/technical.html">Technical</a>.
-<p>tags: <a href="../tag/numpy.html">#numpy</a>&nbsp;<a href="../tag/yaml.html">#yaml</a>&nbsp;<a href="../tag/python.html">#python</a>&nbsp;</p>
-</footer><!-- /.post-info --><p>The problem when dumping a numpy.float with yaml:</p>
-<div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-<span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-</pre></div>
-<p>gives us the following error <code class="python-inline python"><span class="ne">TypeError</span><span class="p">:</span> <span class="n">data</span> <span class="nb">type</span> <span class="ow">not</span> <span class="n">understood</span></code>, because 'a' is of type <code class="python-inline python"><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span></code>.</p>
-<p>One solution is to add a representer to yaml:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">numpy_generic_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_scalar</span><span class="p">(</span><span class="s">'tag:yaml.org,2002:float'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+		in category <a href="../category/personal.html">Personal</a>.
+<p>tags: <a href="../tag/japanese.html">#japanese</a>&nbsp;</p>Translations: 
+        <a href="../self-introduction-jp.html">jp</a>
 
-<span class="n">yaml</span><span class="o">.</span><span class="n">add_multi_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">numpy_generic_representer</span><span class="p">)</span>
-</pre></div>
-<p>We use <code class="python-inline python"><span class="n">np</span><span class="o">.</span><span class="n">generic</span></code> instead of <code class="python-inline python"><span class="n">np</span><span class="o">.</span><span class="n">float32</span></code> because it's a base class for all scalar classes like <code class="python-inline python"><span class="n">float32</span></code> or <code class="python-inline python"><span class="n">float16</span></code>. The function <code class="python-inline python"><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></code> then returns a standard Python scalar.</p>
-<p>Similar we can add a representer for numpy arrays:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">array_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_sequence</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-
-<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">array_representer</span><span class="p">)</span>
-</pre></div>
-<p>Where we use the <code class="python-inline python"><span class="n">tolist</span><span class="p">()</span></code> method to convert the array to a list, and then represent it as a sequence with a "!array" tag in front of it.</p>
-<p>When we load the file we can also construct arrays using:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">array_constructor</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">construct_sequence</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-
-<span class="n">yaml</span><span class="o">.</span><span class="n">add_constructor</span><span class="p">(</span><span class="s">'!array'</span><span class="p">,</span> <span class="n">array_constructor</span><span class="p">)</span>
-</pre></div>
+</footer><!-- /.post-info --><p>Please see japanese translation.</p>
                 </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="../numpy-yaml.html" rel="bookmark"
+                           title="Permalink to Numpy and Yaml">Numpy and Yaml</a></h2>
+                </header>
+                <div class="entry-content">
+                <footer class="post-info">
+                    <abbr title="2015-07-19T14:20:00">
+                        Sun 19 July 2015
+                    </abbr>
+                    in category <a href="../category/technical.html">Technical</a>.
+                </footer>        
+                <p class="first last">Using yaml with numpy</p>
+
+                </div><!-- /.entry-content -->
+            </article></li>
         
 
  
