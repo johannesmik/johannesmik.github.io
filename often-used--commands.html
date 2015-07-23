@@ -53,6 +53,10 @@
 <p>This one let's me interactively add or skip lines of a file to a git commit.</p>
 <div class="highlight"><pre><span class="nv">$ </span>git add -p
 </pre></div>
+<p>Sometimes I spot a small typo or whitespace error just after committing, then I can amend the current commit. This should be done before pushing to a remote branch.</p>
+<div class="highlight"><pre><span class="nv">$ </span>git add errorfile
+<span class="nv">$ </span>git commit --amend
+</pre></div>
 </div>
 <div class="section" id="in-vim">
 <h2>In Vim</h2>
