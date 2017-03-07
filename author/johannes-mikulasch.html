@@ -14,29 +14,98 @@
 	  <h1><a href="../index.html">johannes' blog </a></h1>
 		<nav>
 			<ul>
-					<li><a href="../pages/about.html">About me</a></li>
+				<li><a href="pages/about.html">About</a></li>
 					<li ><a href="../category/personal.html">Personal</a></li>
 					<li ><a href="../category/technical.html">Technical</a></li>
 		</nav>
 	</header>
+    PAGES : 0
 	<div class="content">
    
         
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="../self-introduction.html">Self Introduction in Japanese</a></h2> 
+                    <h2><a href="../einstein-summations.html">Einstein summations</a></h2> 
 <footer class="post-info">
-        <abbr title="2015-07-24T00:00:00">
-                Fri 24 July 2015
+        <abbr title="2015-08-10T14:20:00+02:00">
+                Mo 10 August 2015
         </abbr>
                 by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
-		in category <a href="../category/personal.html">Personal</a>.
-<p>tags: <a href="../tag/japanese.html">#japanese</a>&nbsp;</p>Translations: 
-        <a href="../self-introduction-jp.html">jp</a>
+		in category <a href="../category/technical.html">Technical</a>.
+<p>tags: <a href="../tag/numpy.html">#numpy</a>&nbsp;</p>
+</footer><!-- /.post-info --><p>Einstein summations can be a nice way to downsize some tricky matrix multiplications in Numpy.</p>
+<h2>Applying a transformation T on many points</h2>
+<p>Suppose you have <span class="math">\(m\)</span> 4-dimensional points saved in a <span class="math">\(n \times 4\)</span> matrix, and now you want to apply a <span class="math">\(4 \times 4\)</span> transformation matrix <span class="math">\(T\)</span> to all the points. How would you do that? </p>
+<p>The simple <code>np.dot()</code> won't work, and I could not get it right with <code>np.tensordots()</code> either.</p>
+<p>So I used the Einstein summations.</p>
+<div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ij, klj -&gt; kli'</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+<p>The outcome will be: <span class="math">\(M_{kli} = \sum_j a_{ij} b_{klj}\)</span></p>
+<h4>Code Example:</h4>
+<p>(TODO example not complete)</p>
+<p>Traditional way</p>
+<p>Einstein summation</p>
+<div class="math">$$ \begin{matrix} 1 &amp; 0 &amp; 0 &amp; 2 \\\ 0 &amp; 1 &amp; 0 &amp; 0 \\\ 0 &amp; 0 &amp; 1 &amp; 0 \\\ 0 &amp; 0 &amp; 0 &amp; 1\end{matrix} \cdot $$</div>
+<h2>Runtime of Numpys Einstein summation</h2>
+<p>(TODO compare with C++ methods)</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
 
-</footer><!-- /.post-info --><p>Please see japanese translation.</p>
-                </article>
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script><p>There are <a href="../einstein-summations.html#disqus_thread">comments</a>.</p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
@@ -47,19 +116,38 @@
  
             <li><article>    
                 <header>
+                    <h2><a href="../self-introduction.html" rel="bookmark"
+                           title="Permalink to Self Introduction (Japanese)">Self Introduction (Japanese)</a></h2>
+                </header>
+                <div class="entry-content">
+                <footer class="post-info">
+                    <abbr title="2015-07-24T00:00:00+02:00">
+                        Fr 24 Juli 2015
+                    </abbr>
+                    in category <a href="../category/personal.html">Personal</a>.
+                </footer>        
+                <p class="first last">Self introduction in Japanese</p>
+
+<p>There are <a href="../self-introduction.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
                     <h2><a href="../numpy-yaml.html" rel="bookmark"
                            title="Permalink to Numpy and Yaml">Numpy and Yaml</a></h2>
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2015-07-19T14:20:00">
-                        Sun 19 July 2015
+                    <abbr title="2015-07-19T14:20:00+02:00">
+                        So 19 Juli 2015
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
                 <p class="first last">Using yaml with numpy</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../numpy-yaml.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -71,71 +159,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2015-07-07T10:20:00">
-                        Tue 07 July 2015
+                    <abbr title="2015-07-07T10:20:00+02:00">
+                        Di 07 Juli 2015
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
                 <p class="first last">I list all my often used commands</p>
 
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="../srm-use-cases.html" rel="bookmark"
-                           title="Permalink to SRM-Neurons: Use cases (Part 5)">SRM-Neurons: Use cases (Part 5)</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2014-08-29T21:20:00">
-                        Fri 29 August 2014
-                    </abbr>
-                    in category <a href="../category/technical.html">Technical</a>.
-                </footer>        
-                <p class="first last">Use cases for the SRM Model</p>
-
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="../srm-linearization.html" rel="bookmark"
-                           title="Permalink to SRM-Neurons: Linearization (Part 4)">SRM-Neurons: Linearization (Part 4)</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2014-08-29T19:20:00">
-                        Fri 29 August 2014
-                    </abbr>
-                    in category <a href="../category/technical.html">Technical</a>.
-                </footer>        
-                <p class="first last">I show how to linearize the SRM Model</p>
-
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="../srm-spedup-python.html" rel="bookmark"
-                           title="Permalink to SRM-Neurons: Speeding up the Python implementation (Part 3)">SRM-Neurons: Speeding up the Python implementation (Part 3)</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2014-08-29T00:20:00">
-                        Fri 29 August 2014
-                    </abbr>
-                    in category <a href="../category/technical.html">Technical</a>.
-                </footer>        
-                <p class="first last">Now for some techniques that speed up our Python implementation</p>
-
-                </div><!-- /.entry-content -->
+<p>There are <a href="../often-used--commands.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -147,14 +178,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-08-29T00:00:00">
-                        Fri 29 August 2014
+                    <abbr title="2014-08-29T00:00:00+02:00">
+                        Fr 29 August 2014
                     </abbr>
                     in category <a href="../category/personal.html">Personal</a>.
                 </footer>        
                 <p class="first last">The motivation of my journey and schedule.</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../japan-2014-intro.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -166,33 +197,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-08-29T00:00:00">
-                        Fri 29 August 2014
+                    <abbr title="2014-08-29T00:00:00+02:00">
+                        Fr 29 August 2014
                     </abbr>
                     in category <a href="../category/personal.html">Personal</a>.
                 </footer>        
                 <p class="first last">My daily toolbox for learning Japanese</p>
 
-                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="../srm-first-python.html" rel="bookmark"
-                           title="Permalink to SRM-Neurons: A first Python implementation (Part 2)">SRM-Neurons: A first Python implementation (Part 2)</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2014-08-28T23:20:00">
-                        Thu 28 August 2014
-                    </abbr>
-                    in category <a href="../category/technical.html">Technical</a>.
-                </footer>        
-                <p class="first last">A first implementation of our SRM Neurons in Python</p>
-
-                </div><!-- /.entry-content -->
+<p>There are <a href="../japanese-toolbox.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -204,14 +216,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-08-27T16:20:00">
-                        Wed 27 August 2014
+                    <abbr title="2014-08-27T16:20:00+02:00">
+                        Mi 27 August 2014
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
                 <p class="first last">Use cases for the SRM Model</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../srm-intro.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -219,18 +231,18 @@
             <li><article>    
                 <header>
                     <h2><a href="../rubify.html" rel="bookmark"
-                           title="Permalink to Rubify">Rubify</a></h2>
+                           title="Permalink to The Rubify Pelican plugin">The Rubify Pelican plugin</a></h2>
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-08-17T00:50:00">
-                        Sun 17 August 2014
+                    <abbr title="2014-08-17T00:50:00+02:00">
+                        So 17 August 2014
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
                 <p class="first last">I wrote a small plugin to enable furigana support in Pelican</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../rubify.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -242,14 +254,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-07-02T00:00:00">
-                        Wed 02 July 2014
+                    <abbr title="2014-07-02T00:00:00+02:00">
+                        Mi 02 Juli 2014
                     </abbr>
                     in category <a href="../category/personal.html">Personal</a>.
                 </footer>        
                 <p class="first last">Some of the coolest photos of a nightsession</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../nightsession-hackerbruecke.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -261,14 +273,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-05-16T00:00:00">
-                        Fri 16 May 2014
+                    <abbr title="2014-05-16T00:00:00+02:00">
+                        Fr 16 Mai 2014
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
                 <p class="first last">Description of my Pelican workflow</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../pelican-workflow.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -280,14 +292,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-05-15T10:20:00">
-                        Thu 15 May 2014
+                    <abbr title="2014-05-15T10:20:00+02:00">
+                        Do 15 Mai 2014
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
-                <p class="first last">In this blogpost I write some tests</p>
+                <p class="first last">Facts and quotes about neurons</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../neuron-facts.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -299,14 +311,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-05-15T10:20:00">
-                        Thu 15 May 2014
+                    <abbr title="2014-05-15T10:20:00+02:00">
+                        Do 15 Mai 2014
                     </abbr>
                     in category <a href="../category/technical.html">Technical</a>.
                 </footer>        
-                <p class="first last">In this blogpost I write some tests</p>
+                <p class="first last">This posts shows how to use ReST syntax</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../rest-tests.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -318,14 +330,14 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-05-15T00:00:00">
-                        Thu 15 May 2014
+                    <abbr title="2014-05-15T00:00:00+02:00">
+                        Do 15 Mai 2014
                     </abbr>
                     in category <a href="../category/personal.html">Personal</a>.
                 </footer>        
                 <p class="first last">My intentions of registering at Kartoffelkombinat, and description of my first delivery.</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../first-kk-delivery.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
         
 
@@ -337,14 +349,32 @@
                 </header>
                 <div class="entry-content">
                 <footer class="post-info">
-                    <abbr title="2014-03-10T00:00:00">
-                        Mon 10 March 2014
+                    <abbr title="2014-03-10T00:00:00+01:00">
+                        Mo 10 März 2014
                     </abbr>
                     in category <a href="../category/personal.html">Personal</a>.
                 </footer>        
                 <p class="first last">I just had my first photo in a German newspaper released. Yea! :)</p>
 
-                </div><!-- /.entry-content -->
+<p>There are <a href="../my-first-photo-newspaper.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
+            </article></li>
+        
+
+ 
+            <li><article>    
+                <header>
+                    <h2><a href="../test-md.html" rel="bookmark"
+                           title="Permalink to Markdown Tests">Markdown Tests</a></h2>
+                </header>
+                <div class="entry-content">
+                <footer class="post-info">
+                    <abbr title="2014-03-03T10:20:00+01:00">
+                        Mo 03 März 2014
+                    </abbr>
+                    in category <a href="../category/technical.html">Technical</a>.
+                </footer>        
+                <p>Short version for index and feeds</p>
+<p>There are <a href="../test-md.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
             </ol><!-- /#posts-list -->
             </section><!-- /#content -->
@@ -352,7 +382,16 @@
 
 
 	<footer class="mainfooter">
-		<p><small>&copy; 2013 - 2015, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
+		<p><small>&copy; 2013 - 2017, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
 	</footer>
+<script type="text/javascript">
+    var disqus_shortname = 'johannesmik';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 </body>
 </html>

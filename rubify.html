@@ -3,7 +3,7 @@
 <head>
 				<meta charset="utf-8">
 				<meta name="viewport" content="width:device-width, initial-scale=1.0">
-				<title>Rubify</title>
+				<title>The Rubify Pelican plugin</title>
         <link rel="stylesheet" href="./theme/css/main.css">
       
 
@@ -14,23 +14,24 @@
 	  <h1><a href="./index.html">johannes' blog </a></h1>
 		<nav>
 			<ul>
-					<li><a href="./pages/about.html">About me</a></li>
+				<li><a href="pages/about.html">About</a></li>
 					<li ><a href="./category/personal.html">Personal</a></li>
 					<li class="active"><a href="./category/technical.html">Technical</a></li>
 		</nav>
 	</header>
+    PAGES : 0
 	<div class="content">
 <article>
     <header>
       <h2>
         <a href="./rubify.html" rel="bookmark"
-           title="Permalink to Rubify">Rubify</a></h2>
+           title="Permalink to The Rubify Pelican plugin">The Rubify Pelican plugin</a></h2>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr title="2014-08-17T00:50:00">
-                Sun 17 August 2014
+        <abbr title="2014-08-17T00:50:00+02:00">
+                So 17 August 2014
         </abbr>
                 by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="./category/technical.html">Technical</a>.
@@ -48,32 +49,53 @@
 <div class="section" id="the-plugin-code">
 <h2>The "plugin" code</h2>
 <p>Some lines of Python... Use regular expressions to search for the pattern [*](#fg *) and replace it accordingly.</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">pelican</span> <span class="kn">import</span> <span class="n">signals</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pelican</span> <span class="kn">import</span> <span class="n">signals</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
 <span class="k">def</span> <span class="nf">rubify</span><span class="p">(</span><span class="n">sender</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sender</span><span class="o">.</span><span class="n">_content</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">"</span><span class="si">%s</span><span class="s"> rubifying..."</span> <span class="o">%</span> <span class="n">sender</span>
+        <span class="k">print</span> <span class="s2">"</span><span class="si">%s</span><span class="s2"> rubifying..."</span> <span class="o">%</span> <span class="n">sender</span>
         <span class="n">content</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">_content</span>
 
-        <span class="n">pattern</span> <span class="o">=</span> <span class="s">r'\[([\w]*)\]\(#fg ([\w]*)\)'</span>
-        <span class="n">replacement</span> <span class="o">=</span> <span class="s">r'&lt;ruby&gt;&lt;rb&gt;\1&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;\2&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;'</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'\[([\w]*)\]\(#fg ([\w]*)\)'</span>
+        <span class="n">replacement</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'&lt;ruby&gt;&lt;rb&gt;\1&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;\2&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;'</span>
 
         <span class="n">sender</span><span class="o">.</span><span class="n">_content</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
     <span class="n">signals</span><span class="o">.</span><span class="n">content_object_init</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">rubify</span><span class="p">)</span>
 </pre></div>
-<p>Simple, isn't it :)</p>
 </div>
 
     </div><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments !</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "rubify.html";
+        var disqus_url = "./rubify.html";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://johannesmik.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
 </article>
 	</div>
 
 
 	<footer class="mainfooter">
-		<p><small>&copy; 2013 - 2015, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
+		<p><small>&copy; 2013 - 2017, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
 	</footer>
+<script type="text/javascript">
+    var disqus_shortname = 'johannesmik';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 </body>
 </html>

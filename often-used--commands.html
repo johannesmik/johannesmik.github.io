@@ -14,11 +14,12 @@
 	  <h1><a href="./index.html">johannes' blog </a></h1>
 		<nav>
 			<ul>
-					<li><a href="./pages/about.html">About me</a></li>
+				<li><a href="pages/about.html">About</a></li>
 					<li ><a href="./category/personal.html">Personal</a></li>
 					<li class="active"><a href="./category/technical.html">Technical</a></li>
 		</nav>
 	</header>
+    PAGES : 0
 	<div class="content">
 <article>
     <header>
@@ -29,8 +30,8 @@
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr title="2015-07-07T10:20:00">
-                Tue 07 July 2015
+        <abbr title="2015-07-07T10:20:00+02:00">
+                Di 07 Juli 2015
         </abbr>
                 by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="./category/technical.html">Technical</a>.
@@ -39,73 +40,65 @@
 <div class="section" id="in-bash">
 <h2>In Bash</h2>
 <p>To find 'surface' in all pdf's in a directory</p>
-<div class="highlight"><pre><span class="nv">$ </span>find . -name <span class="s1">'*.pdf'</span> -exec sh -c <span class="s1">'pdftotext "{}" - | grep --with-filename --label="{}" --color "truncated surface"'</span> <span class="se">\;</span>
+<div class="highlight"><pre><span></span>$ find . -name <span class="s1">'*.pdf'</span> -exec sh -c <span class="s1">'pdftotext "{}" - | grep --with-filename --label="{}" --color "truncated surface"'</span> <span class="se">\;</span>
 </pre></div>
 <p>Spell correction:</p>
-<div class="highlight"><pre><span class="nv">$ </span>aspell check textfile.md
+<div class="highlight"><pre><span></span>$ aspell check textfile.md
 </pre></div>
-<p>Renaming a lot of files. We make use of bash's variable substitution <code class="bash"><span class="k">${</span><span class="nv">var</span><span class="p">/Pattern/Replacement</span><span class="k">}</span></code>. For example like this:</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="k">for </span>i in *.txt; <span class="k">do </span>mv <span class="s2">"${i}"</span> <span class="s2">"{i/.txt/_newtext.txt}"</span>; <span class="k">done</span>
+<p>Renaming a lot of files. We make use of bash's variable substitution <code class="bash"><span class="si">${</span><span class="nv">var</span><span class="p">/Pattern/Replacement</span><span class="si">}</span></code>. For example like this:</p>
+<div class="highlight"><pre><span></span>$ <span class="k">for</span> i in *.txt<span class="p">;</span> <span class="k">do</span> mv <span class="s2">"</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"{i/.txt/_newtext.txt}"</span><span class="p">;</span> <span class="k">done</span>
 </pre></div>
 </div>
 <div class="section" id="in-git">
 <h2>In Git</h2>
 <p>This one let's me interactively add or skip lines of a file to a git commit.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git add -p
+<div class="highlight"><pre><span></span>$ git add -p
 </pre></div>
 <p>Sometimes I spot a small typo or whitespace error just after committing, then I can amend the current commit. This should be done before pushing to a remote branch.</p>
-<div class="highlight"><pre><span class="nv">$ </span>git add errorfile
-<span class="nv">$ </span>git commit --amend
+<div class="highlight"><pre><span></span>$ git add errorfile
+$ git commit --amend
 </pre></div>
 </div>
 <div class="section" id="in-vim">
 <h2>In Vim</h2>
 <p>Substitute foo with bar in all lines (%s), but ask for confirmation (c):</p>
-<div class="highlight"><pre>:%s/foo/bar/gc
+<div class="highlight"><pre><span></span>:%s/foo/bar/gc
 </pre></div>
 <p>To paste from the system clipboard:</p>
-<div class="highlight"><pre><span class="err">"</span>*p
+<div class="highlight"><pre><span></span><span class="s2">"*p</span>
 </pre></div>
 <p>That's it for the moment, sorry :)</p>
 </div>
-<script type="text/javascript">
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-</script>
 
     </div><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments !</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "often-used--commands.html";
+        var disqus_url = "./often-used--commands.html";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://johannesmik.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
 </article>
 	</div>
 
 
 	<footer class="mainfooter">
-		<p><small>&copy; 2013 - 2015, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
+		<p><small>&copy; 2013 - 2017, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
 	</footer>
+<script type="text/javascript">
+    var disqus_shortname = 'johannesmik';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 				<meta charset="utf-8">
 				<meta name="viewport" content="width:device-width, initial-scale=1.0">
-				<title>johannes' blog - #numpy</title>
+				<title>johannes' blog - #publishing</title>
         <link rel="stylesheet" href="../theme/css/main.css">
       
 
@@ -26,29 +26,22 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="../einstein-summations.html">Einstein summations</a></h2> 
+                    <h2><a href="../test-md.html">Markdown Tests</a></h2> 
 <footer class="post-info">
-        <abbr title="2015-08-10T14:20:00+02:00">
-                Mo 10 August 2015
+        <abbr title="2014-03-03T10:20:00+01:00">
+                Mo 03 März 2014
         </abbr>
                 by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="../category/technical.html">Technical</a>.
-<p>tags: <a href="../tag/numpy.html">#numpy</a>&nbsp;</p>
-</footer><!-- /.post-info --><p>Einstein summations can be a nice way to downsize some tricky matrix multiplications in Numpy.</p>
-<h2>Applying a transformation T on many points</h2>
-<p>Suppose you have <span class="math">\(m\)</span> 4-dimensional points saved in a <span class="math">\(n \times 4\)</span> matrix, and now you want to apply a <span class="math">\(4 \times 4\)</span> transformation matrix <span class="math">\(T\)</span> to all the points. How would you do that? </p>
-<p>The simple <code>np.dot()</code> won't work, and I could not get it right with <code>np.tensordots()</code> either.</p>
-<p>So I used the Einstein summations.</p>
-<div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ij, klj -&gt; kli'</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-</pre></div>
-<p>The outcome will be: <span class="math">\(M_{kli} = \sum_j a_{ij} b_{klj}\)</span></p>
-<h4>Code Example:</h4>
-<p>(TODO example not complete)</p>
-<p>Traditional way</p>
-<p>Einstein summation</p>
-<div class="math">$$ \begin{matrix} 1 &amp; 0 &amp; 0 &amp; 2 \\\ 0 &amp; 1 &amp; 0 &amp; 0 \\\ 0 &amp; 0 &amp; 1 &amp; 0 \\\ 0 &amp; 0 &amp; 0 &amp; 1\end{matrix} \cdot $$</div>
-<h2>Runtime of Numpys Einstein summation</h2>
-<p>(TODO compare with C++ methods)</p>
+<p>tags: <a href="../tag/pelican.html">#pelican</a>&nbsp;<a href="../tag/publishing.html">#publishing</a>&nbsp;</p>
+</footer><!-- /.post-info --><h1>Heading</h1>
+<p>Some content.</p>
+<h1>Math</h1>
+<p>This is some inline math <span class="math">\(e=mc^2\)</span>.</p>
+<p>And now some block test </p>
+<div class="math">$$x^2$$</div>
+<p>and</p>
+<div class="math">$$\epsilon = f(\alpha)$$</div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -105,31 +98,8 @@
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-</script><p>There are <a href="../einstein-summations.html#disqus_thread">comments</a>.</p>                </article>
+</script><p>There are <a href="../test-md.html#disqus_thread">comments</a>.</p>                </article>
             </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="../numpy-yaml.html" rel="bookmark"
-                           title="Permalink to Numpy and Yaml">Numpy and Yaml</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2015-07-19T14:20:00+02:00">
-                        So 19 Juli 2015
-                    </abbr>
-                    in category <a href="../category/technical.html">Technical</a>.
-                </footer>        
-                <p class="first last">Using yaml with numpy</p>
-
-<p>There are <a href="../numpy-yaml.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
             </ol><!-- /#posts-list -->
             </section><!-- /#content -->
 	</div>

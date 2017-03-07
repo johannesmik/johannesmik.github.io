@@ -14,11 +14,12 @@
 	  <h1><a href="./index.html">johannes' blog </a></h1>
 		<nav>
 			<ul>
-					<li><a href="./pages/about.html">About me</a></li>
+				<li><a href="pages/about.html">About</a></li>
 					<li ><a href="./category/personal.html">Personal</a></li>
 					<li class="active"><a href="./category/technical.html">Technical</a></li>
 		</nav>
 	</header>
+    PAGES : 0
 	<div class="content">
 <article>
     <header>
@@ -29,18 +30,18 @@
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr title="2014-05-15T10:20:00">
-                Thu 15 May 2014
+        <abbr title="2014-05-15T10:20:00+02:00">
+                Do 15 Mai 2014
         </abbr>
                 by <a class="url fn" href="./author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="./category/technical.html">Technical</a>.
 <p>tags: <a href="./tag/tests.html">#tests</a>&nbsp;</p>
-</footer><!-- /.post-info -->      <p>Since I don't know ReST so good yet, I try out some examples here.</p>
-<p>Its also good because I can look how they get rendered in my blog.</p>
+</footer><!-- /.post-info -->      <p>For future reference, I collect some ReST examples here. They serve as a reference for how to use the syntax and also show if the Pelican blog renders correctly.</p>
 <div class="section" id="kanji-and-japanese">
 <h2>Kanji and Japanese</h2>
 <p>Now for some Japanese text:</p>
 <p>こんにちは。　俺はヨハネスです。</p>
+<p>Furigana are also supported: <ruby><rb>世界</rb><rp>(</rp><rt>せかい</rt><rp>)</rp></p>
 </div>
 <div class="section" id="html-code-block">
 <h2>HTML Code Block</h2>
@@ -49,29 +50,37 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>code block example<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;p&gt;</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>code block example<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
     Some more test text
-<span class="nt">&lt;/p&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </pre></div>
 </td></tr></table></div>
 <div class="section" id="python-code-block">
 <h2>Python code Block</h2>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="k">print</span> <span class="s">'Hello world'</span>
+<span class="k">print</span> <span class="s1">'Hello world'</span>
 <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mf">5.4</span>
 </pre></div>
-<div class="highlight"><pre><span class="k">print</span> <span class="s">'hello world'</span>
+<div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">'hello world'</span>
 </pre></div>
 </div>
 <div class="section" id="bash-code">
 <h2>Bash code</h2>
-<div class="highlight"><pre><span class="nb">cd</span>
-<span class="k">if</span> <span class="o">[</span> <span class="s2">"$1"</span> <span class="o">==</span> <span class="s2">"hello"</span> <span class="o">]</span>; <span class="k">then</span>
-<span class="k">    </span><span class="nb">echo </span>World
+<div class="highlight"><pre><span></span><span class="nb">cd</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"hello"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> World
 <span class="k">fi</span>
 </pre></div>
+</div>
+<div class="section" id="math">
+<h2>Math</h2>
+<p>This is $\epsilon_0$ some math code.</p>
+<p>\begin{equation}
+\epsilon_0(s) = \frac{1}{1 - \tau_s / \tau_m}
+\left[ \exp (-\frac{s}{\tau_m}) - \exp ( -\frac{s}{\tau_s} ) \right]
+\end{equation}</p>
 </div>
 <div class="section" id="other-code">
 <h2>Other Code</h2>
@@ -81,7 +90,7 @@ $ sudo apt-get install python</blockquote>
 </div>
 <div class="section" id="loading-whole-files">
 <h2>Loading whole files</h2>
-<p>This is not supported. Maybe include it (literalinclude directive).</p>
+<p>This is not supported at the moment. Maybe include it later, for example with the literalinclude directive.</p>
 </div>
 <div class="section" id="images">
 <h2>Images</h2>
@@ -94,54 +103,45 @@ The legend consists of all elements after the caption. In this case, the legend 
 </div>
 <div class="section" id="some-boxes">
 <h2>Some Boxes</h2>
-<p>The seealso and todo boxes seem not to work at the moment.</p>
-<div class="note">
+<div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">A note box</p>
 </div>
-<div class="warning">
+<div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">A warning box</p>
 </div>
 </div>
-<script type="text/javascript">
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-</script>
 
     </div><!-- /.entry-content -->
+    <div class="comments">
+      <h2>Comments !</h2>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_identifier = "rest-tests.html";
+        var disqus_url = "./rest-tests.html";
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://johannesmik.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
 </article>
 	</div>
 
 
 	<footer class="mainfooter">
-		<p><small>&copy; 2013 - 2015, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
+		<p><small>&copy; 2013 - 2017, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
 	</footer>
+<script type="text/javascript">
+    var disqus_shortname = 'johannesmik';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 </body>
 </html>

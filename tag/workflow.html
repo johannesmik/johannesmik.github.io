@@ -14,11 +14,12 @@
 	  <h1><a href="../index.html">johannes' blog </a></h1>
 		<nav>
 			<ul>
-					<li><a href="../pages/about.html">About me</a></li>
+				<li><a href="pages/about.html">About</a></li>
 					<li ><a href="../category/personal.html">Personal</a></li>
 					<li ><a href="../category/technical.html">Technical</a></li>
 		</nav>
 	</header>
+    PAGES : 0
 	<div class="content">
    
         
@@ -27,8 +28,8 @@
                 <article>
                     <h2><a href="../pelican-workflow.html">My Pelican Workflow</a></h2> 
 <footer class="post-info">
-        <abbr title="2014-05-16T00:00:00">
-                Fri 16 May 2014
+        <abbr title="2014-05-16T00:00:00+02:00">
+                Fr 16 Mai 2014
         </abbr>
                 by <a class="url fn" href="../author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="../category/technical.html">Technical</a>.
@@ -102,37 +103,7 @@ $ git push origin gh-pages:master
 <p>The push command pushes the local <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch (created by gh-import) to the <tt class="docutils literal">master</tt> branch of my github repo.</p>
 <p>Thats it.</p>
 </div>
-<script type="text/javascript">
-    if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-        var mathjaxscript = document.createElement('script');
-        mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-        mathjaxscript.type = 'text/javascript';
-        mathjaxscript.src = 'https:' == document.location.protocol
-                ? 'https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
-                : 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-        mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-            "MathJax.Hub.Config({" +
-            "    config: ['MMLorHTML.js']," +
-            "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-            "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-            "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-            "    displayAlign: 'center'," +
-            "    displayIndent: '0em'," +
-            "    showMathMenu: true," +
-            "    tex2jax: { " +
-            "        inlineMath: [ ['$','$'] ], " +
-            "        displayMath: [ ['$$','$$'] ]," +
-            "        processEscapes: true," +
-            "        preview: 'TeX'," +
-            "    }, " +
-            "    'HTML-CSS': { " +
-            "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
-            "    } " +
-            "}); ";
-        (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-    }
-</script>
-                </article>
+<p>There are <a href="../pelican-workflow.html#disqus_thread">comments</a>.</p>                </article>
             </aside><!-- /#featured -->
             </ol><!-- /#posts-list -->
             </section><!-- /#content -->
@@ -140,7 +111,16 @@ $ git push origin gh-pages:master
 
 
 	<footer class="mainfooter">
-		<p><small>&copy; 2013 - 2015, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
+		<p><small>&copy; 2013 - 2017, Johannes Mikulasch. Powered by <a href="http://www.python.org">Python</a> and <a href="http://blog.getpelican.com/">Pelican</a></small></p>
 	</footer>
+<script type="text/javascript">
+    var disqus_shortname = 'johannesmik';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 </body>
 </html>
