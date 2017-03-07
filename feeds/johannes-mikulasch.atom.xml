@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>johannes' blog - Johannes Mikulasch</title><link href="http://johannesmik.github.io/" rel="alternate"></link><link href="http://johannesmik.github.io/feeds/johannes-mikulasch.atom.xml" rel="self"></link><id>http://johannesmik.github.io/</id><updated>2017-03-03T10:20:00+01:00</updated><entry><title>Einstein summations</title><link href="http://johannesmik.github.io/einstein-summations.html" rel="alternate"></link><published>2015-08-10T14:20:00+02:00</published><updated>2015-08-10T14:20:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2015-08-10:/einstein-summations.html</id><summary type="html">&lt;p&gt;Some useful Einstein summations I figured out&lt;/p&gt;</summary><content type="html">&lt;p&gt;Einstein summations can be a nice way to downsize some tricky matrix multiplications in Numpy.&lt;/p&gt;
+&lt;h2&gt;Applying a transformation T on many points&lt;/h2&gt;
+&lt;p&gt;Suppose you have &lt;span class="math"&gt;\(m\)&lt;/span&gt; 4-dimensional points saved in a &lt;span class="math"&gt;\(n \times 4\)&lt;/span&gt; matrix, and now you want to apply a &lt;span class="math"&gt;\(4 \times 4\)&lt;/span&gt; transformation matrix &lt;span class="math"&gt;\(T\)&lt;/span&gt; to all the points. How would you do that? &lt;/p&gt;
+&lt;p&gt;The simple &lt;code&gt;np.dot()&lt;/code&gt; won't work, and I could not get it right with &lt;code&gt;np.tensordots()&lt;/code&gt; either.&lt;/p&gt;
+&lt;p&gt;So I used the Einstein summations.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;einsum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'ij, klj -&amp;gt; kli'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The outcome will be: &lt;span class="math"&gt;\(M_{kli} = \sum_j a_{ij} b_{klj}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h4&gt;Code Example:&lt;/h4&gt;
+&lt;p&gt;(TODO example not complete)&lt;/p&gt;
+&lt;p&gt;Traditional way&lt;/p&gt;
+&lt;p&gt;Einstein summation&lt;/p&gt;
+&lt;div class="math"&gt;$$ \begin{matrix} 1 &amp;amp; 0 &amp;amp; 0 &amp;amp; 2 \\\ 0 &amp;amp; 1 &amp;amp; 0 &amp;amp; 0 \\\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \\\ 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1\end{matrix} \cdot $$&lt;/div&gt;
+&lt;h2&gt;Runtime of Numpys Einstein summation&lt;/h2&gt;
+&lt;p&gt;(TODO compare with C++ methods)&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="numpy"></category></entry><entry><title>Self Introduction (Japanese)</title><link href="http://johannesmik.github.io/self-introduction.html" rel="alternate"></link><published>2015-07-24T00:00:00+02:00</published><updated>2015-07-24T00:00:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2015-07-24:/self-introduction.html</id><summary type="html">&lt;p class="first last"&gt;Self introduction in Japanese&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;はじめまして。&lt;ruby&gt;&lt;rb&gt;私&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;わたし&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;はミクラシュ・ヨハネスと&lt;ruby&gt;&lt;rb&gt;申&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;もう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;します。 今２８&lt;ruby&gt;&lt;rb&gt;際&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;さい&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;です。&lt;/p&gt;
+&lt;p&gt;&lt;ruby&gt;&lt;rb&gt;専門&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;せんもん&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;は&lt;ruby&gt;&lt;rb&gt;情報科学&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;じょうほうかがく&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;で、その中では&lt;ruby&gt;&lt;rb&gt;人工知能&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;じんこうちのう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;やコンピュータビジョンを&lt;ruby&gt;&lt;rb&gt;専攻&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;せんこう&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;しています。&lt;/p&gt;
+&lt;p&gt;&lt;ruby&gt;&lt;rb&gt;趣味&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;しゅみ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;は写真を撮ることやスポーツで走ったり跳んだりすることです。&lt;/p&gt;
+&lt;p&gt;&lt;ruby&gt;&lt;rb&gt;一昨年&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;おととし&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;に日本で４ヵ月間&lt;ruby&gt;&lt;rb&gt;留学&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;りゅうがく&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;をして、日本の生活に&lt;ruby&gt;&lt;rb&gt;馴染&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;なじ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;みました。&lt;/p&gt;
+&lt;p&gt;大学の研究室で勉強しました。とても楽しかったです。&lt;/p&gt;
+&lt;p&gt;今年の&lt;ruby&gt;&lt;rb&gt;９月&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;くがつ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;からもう一同日本に行きたいと思っています。なぜなら日本で働きたいからです。&lt;/p&gt;
+&lt;p&gt;&lt;ruby&gt;&lt;rb&gt;情報科学&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;じょうほうかがく&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;性のように、&lt;ruby&gt;&lt;rb&gt;沢山&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;たくさん&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;キャリアのチャンスがあると思います。&lt;/p&gt;
+&lt;p&gt;ここで１０ヵ月間語学学校に行って、それから８ヵ月間インターンをしたいと思います。&lt;/p&gt;
+&lt;p&gt;日本人のいい&lt;ruby&gt;&lt;rb&gt;所&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ところ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;は&lt;ruby&gt;&lt;rb&gt;丁寧&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ていねい&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;な&lt;ruby&gt;&lt;rb&gt;所&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ところ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;です、たたえばお店の&lt;ruby&gt;&lt;rb&gt;接客&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;せっきゃく&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;などです。&lt;/p&gt;
+&lt;p&gt;以上です。よろしくお願いします。&lt;/p&gt;
+</content><category term="japanese"></category></entry><entry><title>Numpy and Yaml</title><link href="http://johannesmik.github.io/numpy-yaml.html" rel="alternate"></link><published>2015-07-19T14:20:00+02:00</published><updated>2015-07-19T14:20:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2015-07-19:/numpy-yaml.html</id><summary type="html">&lt;p class="first last"&gt;Using yaml with numpy&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The problem when dumping a numpy.float with yaml:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;gives us the following error &lt;code class="python-inline python"&gt;&lt;span class="ne"&gt;TypeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;understood&lt;/span&gt;&lt;/code&gt;, because 'a' is of type &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;numpy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;One solution is to add a representer to yaml:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;numpy_generic_representer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dumper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;dumper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;represent_scalar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'tag:yaml.org,2002:float'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;()))&lt;/span&gt;
+
+&lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_multi_representer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;numpy_generic_representer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We use &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;generic&lt;/span&gt;&lt;/code&gt; instead of &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;/code&gt; because it's a base class for all scalar classes like &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;/code&gt; or &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;float16&lt;/span&gt;&lt;/code&gt;. The function &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;/code&gt; then returns a standard Python scalar.&lt;/p&gt;
+&lt;p&gt;Similar we can add a representer for numpy arrays:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;array_representer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dumper&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;dumper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;represent_sequence&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'!array'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tolist&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+&lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_representer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ndarray&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;array_representer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Where we use the &lt;code class="python-inline python"&gt;&lt;span class="n"&gt;tolist&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;/code&gt; method to convert the array to a list, and then represent it as a sequence with a "!array" tag in front of it.&lt;/p&gt;
+&lt;p&gt;When we load the file we can also construct arrays using:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;array_constructor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;loader&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;node&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;construct_sequence&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_constructor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'!array'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;array_constructor&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="numpy"></category><category term="yaml"></category><category term="python"></category></entry><entry><title>Often used commands</title><link href="http://johannesmik.github.io/often-used--commands.html" rel="alternate"></link><published>2015-07-07T10:20:00+02:00</published><updated>2015-07-07T10:20:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2015-07-07:/often-used--commands.html</id><summary type="html">&lt;p class="first last"&gt;I list all my often used commands&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;In this post I'll list all my often used commands, that I tend to forget from time to time.&lt;/p&gt;
+&lt;div class="section" id="in-bash"&gt;
+&lt;h2&gt;In Bash&lt;/h2&gt;
+&lt;p&gt;To find 'surface' in all pdf's in a directory&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ find . -name &lt;span class="s1"&gt;'*.pdf'&lt;/span&gt; -exec sh -c &lt;span class="s1"&gt;'pdftotext "{}" - | grep --with-filename --label="{}" --color "truncated surface"'&lt;/span&gt; &lt;span class="se"&gt;\;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Spell correction:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ aspell check textfile.md
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Renaming a lot of files. We make use of bash's variable substitution &lt;code class="bash"&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;var&lt;/span&gt;&lt;span class="p"&gt;/Pattern/Replacement&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;/code&gt;. For example like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="k"&gt;for&lt;/span&gt; i in *.txt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; mv &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="s2"&gt;"{i/.txt/_newtext.txt}"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="in-git"&gt;
+&lt;h2&gt;In Git&lt;/h2&gt;
+&lt;p&gt;This one let's me interactively add or skip lines of a file to a git commit.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git add -p
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Sometimes I spot a small typo or whitespace error just after committing, then I can amend the current commit. This should be done before pushing to a remote branch.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git add errorfile
+$ git commit --amend
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="in-vim"&gt;
+&lt;h2&gt;In Vim&lt;/h2&gt;
+&lt;p&gt;Substitute foo with bar in all lines (%s), but ask for confirmation (c):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;:%s/foo/bar/gc
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To paste from the system clipboard:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="s2"&gt;"*p&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That's it for the moment, sorry :)&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="git"></category><category term="bash"></category></entry><entry><title>Journey to Japan 2014 - Introduction</title><link href="http://johannesmik.github.io/japan-2014-intro.html" rel="alternate"></link><published>2014-08-29T00:00:00+02:00</published><updated>2014-08-29T00:00:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-08-29:/japan-2014-intro.html</id><summary type="html">&lt;p class="first last"&gt;The motivation of my journey and schedule.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;This September I travel to Japan one more time. It's going to be an awesome journey - I will meet a lot of old and new friends and going to see so many new places. I'm looking really forward to it.&lt;/p&gt;
+&lt;p&gt;In this blog entry I want to express my motivation and introduce everyone interested to my intended schedule.&lt;/p&gt;
+&lt;div class="section" id="motivation"&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Last year, I was an exchange student at Hokkaido University. This was a unique experience I never want to miss. In my laboratory I felt heartily welcomed and my professors gave me new Denkanstoesse. I also made many new friends, the list to mention them all would be too long. I also learned a lot about the Japanese culture, and began to really enjoy the cuisine (When I came back to Germany one of the first things I did was to buy an electric rice cooker). After my 4 months stay, Sapporo felt like my 2nd hometown.&lt;/p&gt;
+&lt;p&gt;However, I could not help the feeling that there is so much more to see in Japan. Most of the time I was staying Hokkaido, with two short visits to Shibuya in Tokyo. But the other parts of Japan are also very interesting and each one is unique. Have a look at all the different dishes that each region serves. Or the dozens of dialects spread across the country. Regarding the people, it is said that their temper and culture differ, too! I think that because each region of Japan is so different, it's reasonable to want to visit them all.&lt;/p&gt;
+&lt;p&gt;Another motivation is that I want to tackle the Japanese language. I think that language is a medium that not only transports bare words, but also cultural aspects, as well as personal thoughts and feelings. By improving my speaking and listening abilities, I can get to know you all better. For this reason, I try the 'Immersion technique.' This technique sounds complicated, but it really means speaking only Japanese for the whole month. Of course, I will make errors, and when you spot them feel free to correct them.&lt;/p&gt;
+&lt;p&gt;I hope that my friends will help me to make this journey a success. Whether you can show me around the city, introduce me to your friends, have a coffee or cake together, or else... I'll be happy to meet all my old friends, and make many new acquaintances during my journey.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="schedule"&gt;
+&lt;h2&gt;Schedule&lt;/h2&gt;
+&lt;p&gt;I really don't have a fixed schedule yet. As I have bought a 21-day JR Rail Ticket, I can use any train in the country. So I'm pretty free to move around the whole country.&lt;/p&gt;
+&lt;p&gt;However, I made a decision on which regions I want to visit. But take the numbers not too accurate, I definitely will change this schedule for a few days.&lt;/p&gt;
+&lt;div class="figure" style="width: 707px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Travel schedule" src="http://johannesmik.github.io/images/japan2014-schedule.jpg" style="width: 400px;width: 707px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;My travel schedule&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusive-words"&gt;
+&lt;h2&gt;Conclusive words&lt;/h2&gt;
+&lt;p&gt;Thanks for reading. My journey starts on Monday, I'm very excited about it :)
+楽しみです。&lt;/p&gt;
+&lt;p&gt;Johannes / ヨハネス&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="japanese"></category><category term="japan2014"></category></entry><entry><title>Japanese Toolbox</title><link href="http://johannesmik.github.io/japanese-toolbox.html" rel="alternate"></link><published>2014-08-29T00:00:00+02:00</published><updated>2014-08-29T00:00:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-08-29:/japanese-toolbox.html</id><summary type="html">&lt;p class="first last"&gt;My daily toolbox for learning Japanese&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Japanese can be a really hard language to tackle. Luckily, there a loads of useful tools freely available online. Here I will present you my list of useful learning resources.&lt;/p&gt;
+&lt;div class="section" id="anki"&gt;
+&lt;h2&gt;Anki&lt;/h2&gt;
+&lt;p&gt;Anki is a Space Repetition System (SRS). Now what is a SRS? It's similar to writing vocabulary cards manually on small cards, BUT the program automatically manages the time that the cards are reviewed based on a well-established algorithm. New cards are repeated quite often, whereas cards that you know well are repeated less often.&lt;/p&gt;
+&lt;p&gt;What I like about Anki is that the cards can be customized to my needs. There is also good support for the Japanese language. For example, if I write a word in Kanji the correct writing in Hiragana is automatically supplemented.&lt;/p&gt;
+&lt;p&gt;See the website: &lt;a class="reference external" href="http://www.ankisrs.net"&gt;ankisrs.net&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="kanji-senpai"&gt;
+&lt;h2&gt;Kanji Senpai&lt;/h2&gt;
+&lt;p&gt;Its a SRS similar to Anki, but it provides a good set of already made cards. It offers premade lists for all JLPT levels. I found the (premium content) audio files very useful, and as they only cost a few euros I bought them.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="makimono"&gt;
+&lt;h2&gt;Makimono&lt;/h2&gt;
+&lt;p&gt;Makimono is a (English, German,...) to Japanese dictionary for Android. It also includes sample sentences from the &lt;a class="reference external" href="http://www.tatoeba.org"&gt;tatoeba&lt;/a&gt; project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="fluentu"&gt;
+&lt;h2&gt;FluentU&lt;/h2&gt;
+&lt;p&gt;One of the most difficult problems is to understand spoken Japanese. While listening to main-stream media like Youtube videos and Anime helps a lot, it's still far from efficient. Because you normally cannot understand the whole sentences, you might lose some words, or you have to use your dictionary all the time.&lt;/p&gt;
+&lt;p&gt;The FluentU website comes to the rescue. It offers a small selection of recent youtube videos with subtitles. The very cool thing is that as soon as you hover over the subtitles, the video pauses, and it shows you the translation of the words you want to know.&lt;/p&gt;
+&lt;p&gt;A basic account is free and with it you can use the main feature (watching videos with subtitles).&lt;/p&gt;
+&lt;p&gt;Website: &lt;a class="reference external" href="http://www.fluentu.com"&gt;fluentu.com&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="rikaikun-rikaichan"&gt;
+&lt;h2&gt;Rikaikun / Rikaichan&lt;/h2&gt;
+&lt;p&gt;A practical extension for Chrome (Rikaikun) and Firefox (Rikaichan). Simply hover over a Kanji you don't know and it shows you the Hiragana and an English translation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="books-online-resources"&gt;
+&lt;h2&gt;Books / Online Resources&lt;/h2&gt;
+&lt;p&gt;Regarding Grammar, I read through Tae Kims Guide to Japanese. I was reading this guide with high-speed, just under 2 weeks for all lessons. It gave me a good understanding of the Japanese grammar. When reading sentences I could identify the grammar. However, actually using the grammar is another thing, and I think I will read this guide in future again, but much slower, carefully trying to practise each section.&lt;/p&gt;
+&lt;p&gt;Most recently, I discovered the imabi.net website, which lessons look more detailed than Tae Kims guide.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="japanese"></category></entry><entry><title>SRM-Neurons: Introducing the SRM Model (Part 1)</title><link href="http://johannesmik.github.io/srm-intro.html" rel="alternate"></link><published>2014-08-27T16:20:00+02:00</published><updated>2014-08-27T16:20:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-08-27:/srm-intro.html</id><summary type="html">&lt;p class="first last"&gt;Use cases for the SRM Model&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The Spike Response Model (SRM) is a phenomenological model for spike emitting neurons. A good description can be found on &lt;a class="reference external" href="http://www.scholarpedia.org/article/Spike-response_model"&gt;Scholarpedia SRM&lt;/a&gt;.1&lt;/p&gt;
+&lt;div class="section" id="definition-of-the-srm-0-model"&gt;
+&lt;h2&gt;Definition of the SRM-0 model&lt;/h2&gt;
+&lt;p&gt;The current of a Neuron $i$ at time $t$ is defined as follows:&lt;/p&gt;
+&lt;p&gt;\begin{equation}
+u_i(t) = \eta (t - \hat{t}_i) + \sum_{j} w_{ij} \sum_{t_j^f}\epsilon_0 (t - t_j^f)
+\end{equation}&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;Where&lt;/dt&gt;
+&lt;dd&gt;&lt;ul class="first last simple"&gt;
+&lt;li&gt;$\hat{t}_i$ is the time of the last (outgoing) spike at neuron $i$&lt;/li&gt;
+&lt;li&gt;$t_j^f$ are the outgoing spikes of neuron $j$&lt;/li&gt;
+&lt;li&gt;$w_{ij}$ are the weights from neuron $j$ to neuron $i$&lt;/li&gt;
+&lt;li&gt;$\eta(s)$ defines the spike and the refraction time (see below) of neuron $i$&lt;/li&gt;
+&lt;li&gt;$\epsilon_0(s)$ defines the (time-dilated) spikes of incoming neurons (see below)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="section" id="does-it-spike"&gt;
+&lt;h3&gt;Does it spike?&lt;/h3&gt;
+&lt;p&gt;The neuron $i$ now spikes if the current $u_i (t)$ is above a certain threshold $\vartheta$&lt;/p&gt;
+&lt;p&gt;\begin{equation}
+u_i(t) \ge \vartheta \rightarrow spike \\
+u_i(t) &amp;lt; \vartheta \rightarrow no spike
+\end{equation}&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-eta-s-function"&gt;
+&lt;h3&gt;The $\eta(s)$ function&lt;/h3&gt;
+&lt;p&gt;The $\eta(s)$ function is defined as follows:&lt;/p&gt;
+&lt;p&gt;\begin{equation}
+\eta(s) = \delta(s) - \eta_0 \exp ( - \frac{s}{\tau_m})
+\end{equation}&lt;/p&gt;
+&lt;p&gt;$\delta(s)$ is the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Dirac_delta_function"&gt;Dirac-Delta function&lt;/a&gt;, $\tau_m$ is a membran time constant, and $\eta_0$ is a measure for the reset of the potential after a spike.&lt;/p&gt;
+&lt;div class="figure" style="width: 812px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="The eta function" src="http://johannesmik.github.io/images/neurons_eta_function.jpeg" style="width: 812px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;The $\eta(s)$ function for $\eta_{reset} = 50$ and $\tau_m = 30$.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;As you can see, the function generates a spike at time $s = 0$, and then one time-step later it takes the reset value $\eta_{reset}$, from which it exponantially 'regenerates', depending on $\t_{membran}$. With this attribute we can model the spike refractory time.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-epsilon-0-function"&gt;
+&lt;h3&gt;The $\epsilon_0$ function&lt;/h3&gt;
+&lt;p&gt;The $\epsilon_0$ function models the progress of an incoming spike's current.&lt;/p&gt;
+&lt;p&gt;It is defined as follows:&lt;/p&gt;
+&lt;p&gt;\begin{equation}
+\epsilon_0(s) = \frac{1}{1 - \tau_s / \tau_m}
+\left[ \exp (-\frac{s}{\tau_m}) - \exp ( -\frac{s}{\tau_s} ) \right]
+\end{equation}&lt;/p&gt;
+&lt;p&gt;Where $\tau_m$ is the same membrane time constant as in the $\eta$ function and $\tau_s$ another time constant (which derives from the duration of the current).&lt;/p&gt;
+&lt;div class="figure" style="width: 812px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="The epsilon function" src="http://johannesmik.github.io/images/neurons_epsilon_function.jpeg" style="width: 812px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;The $\epsilon(s)$ function for $\tau_c = 20$ and $\tau_m = 30$&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;As you can see the function peaks at around 20 milliseconds (more general, at around $\tau_c$. Roughly said, this function models the time-delay on the axons.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="summary-of-the-included-variables"&gt;
+&lt;h3&gt;Summary of the included variables&lt;/h3&gt;
+&lt;p&gt;Which variables do we have in this model?&lt;/p&gt;
+&lt;p&gt;$\tau_m$, $\tau_s$, $\vartheta$, $\eta_0$, $w$.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="neurons"></category></entry><entry><title>The Rubify Pelican plugin</title><link href="http://johannesmik.github.io/rubify.html" rel="alternate"></link><published>2014-08-17T00:50:00+02:00</published><updated>2014-08-17T00:50:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-08-17:/rubify.html</id><summary type="html">&lt;p class="first last"&gt;I wrote a small plugin to enable furigana support in Pelican&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Rubify is a small plugin for the pelican blog, that enables Furigana support.&lt;/p&gt;
+&lt;div class="section" id="technical"&gt;
+&lt;h2&gt;Technical&lt;/h2&gt;
+&lt;p&gt;I use the &lt;a class="reference external" href="http://www.w3.org/International/articles/ruby/"&gt;XHTML Ruby Tags&lt;/a&gt; to display furigana. Chrome does support this (standard) notation, but unfortunately Firefox does not... Have to think about another solution in the future maybe.&lt;/p&gt;
+&lt;p&gt;I use the &lt;a class="reference external" href="http://www.reddit.com/r/LearnJapanese/wiki/subredditrules#wiki_furigana.2C_or_how_i_get_those_funny_little_characters_over_the_top_of_my_words"&gt;reddit furigana syntax&lt;/a&gt; to markup my Kanjis with furigana.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="examples"&gt;
+&lt;h2&gt;Examples&lt;/h2&gt;
+&lt;p&gt;The pattern [漢字] (#fg かんじ) will be printed like &lt;ruby&gt;&lt;rb&gt;漢字&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;かんじ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-plugin-code"&gt;
+&lt;h2&gt;The "plugin" code&lt;/h2&gt;
+&lt;p&gt;Some lines of Python... Use regular expressions to search for the pattern [*](#fg *) and replace it accordingly.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pelican&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;signals&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rubify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sender&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;sender&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_content&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt; rubifying..."&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;sender&lt;/span&gt;
+        &lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sender&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_content&lt;/span&gt;
+
+        &lt;span class="n"&gt;pattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'\[([\w]*)\]\(#fg ([\w]*)\)'&lt;/span&gt;
+        &lt;span class="n"&gt;replacement&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sa"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt;ruby&amp;gt;&amp;lt;rb&amp;gt;\1&amp;lt;/rb&amp;gt;&amp;lt;rp&amp;gt;(&amp;lt;/rp&amp;gt;&amp;lt;rt&amp;gt;\2&amp;lt;/rt&amp;gt;&amp;lt;rp&amp;gt;)&amp;lt;/rp&amp;gt;'&lt;/span&gt;
+
+        &lt;span class="n"&gt;sender&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sub&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;replacement&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UNICODE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;register&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;signals&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;content_object_init&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rubify&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="pelican"></category><category term="tests"></category></entry><entry><title>Nightsession at Hackerbruecke</title><link href="http://johannesmik.github.io/nightsession-hackerbruecke.html" rel="alternate"></link><published>2014-07-02T00:00:00+02:00</published><updated>2014-07-02T00:00:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-07-02:/nightsession-hackerbruecke.html</id><summary type="html">&lt;p class="first last"&gt;Some of the coolest photos of a nightsession&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;We went for a cool nightsession at Hackerbruecke last Saturday.&lt;/p&gt;
+&lt;div class="figure" style="width: 800px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Carola" src="http://johannesmik.github.io/images/hackernight_carola.jpg" style="width: 800px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;Carola&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure" style="width: 800px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Nadja" src="http://johannesmik.github.io/images/hackernight_nadja.jpg" style="width: 800px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;Nadja&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure" style="width: 800px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Cosmin" src="http://johannesmik.github.io/images/hackernight_kosmin.jpg" style="width: 800px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;Cosmin&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Let's do it again sometime&lt;/p&gt;
+</content><category term="photography"></category></entry><entry><title>My Pelican Workflow</title><link href="http://johannesmik.github.io/pelican-workflow.html" rel="alternate"></link><published>2014-05-16T00:00:00+02:00</published><updated>2014-05-16T00:00:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-05-16:/pelican-workflow.html</id><summary type="html">&lt;p class="first last"&gt;Description of my Pelican workflow&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;This is based on an article of &lt;a class="reference external" href="http://blog.xlarrakoetxea.org/posts/2012/10/creating-a-blog-with-pelican/"&gt;SloksBlog&lt;/a&gt; and the &lt;a class="reference external" href="http://docs.getpelican.com/en/3.3.0/tips.html"&gt;PelicanDoku&lt;/a&gt;. I rewrote it so I still know what I have done, even if his page should go down.&lt;/p&gt;
+&lt;div class="section" id="installation"&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;First, I installed virtualenv, and virtualenvwrapper (simplifies the use of virtualenv, for example includes a set of bash functions).:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;(Actually, you can also only install the latter, as it has a dependency on the former)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Then I added this to my &lt;tt class="docutils literal"&gt;.bashrc&lt;/tt&gt; to configure virtualenvwrapper:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# Virtual Environments Wrapper
+export WORKON_HOME=~/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+&lt;/pre&gt;
+&lt;p&gt;Next, I created a new virtualenv:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ mkvirtualenv blog
+&lt;/pre&gt;
+&lt;p&gt;I now can use those two commands to start and end working on my blog:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ workon blog
+$ deactivate
+&lt;/pre&gt;
+&lt;p&gt;I added this to &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.virtualenvs/postactivate&lt;/span&gt;&lt;/tt&gt; script. That takes me to the right folder after &lt;tt class="docutils literal"&gt;workon blog&lt;/tt&gt;.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+if [ "$(basename $VIRTUAL_ENV)" == "blog" ]; then
+    cd ~/workspace/blog
+fi
+&lt;/pre&gt;
+&lt;p&gt;The advantage is that I can (pip) install and update all the python packages I want without messing up my other projects.:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ pip install pelican
+$ pip install ghp-import
+&lt;/pre&gt;
+&lt;p&gt;Some other packages I needed.&lt;/p&gt;
+&lt;p&gt;For the 'better_figures_and_images' plugin:&lt;/p&gt;
+&lt;blockquote&gt;
+$ pip install pillow beautifulsoup4&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="new-git-workflow"&gt;
+&lt;h2&gt;New Git Workflow&lt;/h2&gt;
+&lt;p&gt;Because the ghpages was somehow putting files in the blog directory I changed the workflow a little bit.&lt;/p&gt;
+&lt;p&gt;I initialised a new git repo in the output directory, so changes get pushed like this:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ cd output
+$ git commit -a
+$ git push
+$ (git push --force)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="old-git-workflow"&gt;
+&lt;h2&gt;Old Git Workflow&lt;/h2&gt;
+&lt;p&gt;Using git userpages, I set up a new git repository called &lt;tt class="docutils literal"&gt;username.github.io&lt;/tt&gt;. Then I created a new git repo in my blog directory and set it up:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ cd workspace/blog
+$ git init
+$ git remote add origin git@github.com:username/username.github.io.git
+&lt;/pre&gt;
+&lt;p&gt;Then I can use the following commands to build and publish my page:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ pelican content -o output -s pelicanconf.py
+$ ghp-import output -m "Commit message"
+$ git push origin gh-pages:master
+&lt;/pre&gt;
+&lt;p&gt;The ghp-import command commits the output directory to a local branch called &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;gh-pages&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;The push command pushes the local &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;gh-pages&lt;/span&gt;&lt;/tt&gt; branch (created by gh-import) to the &lt;tt class="docutils literal"&gt;master&lt;/tt&gt; branch of my github repo.&lt;/p&gt;
+&lt;p&gt;Thats it.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="pelican"></category><category term="workflow"></category></entry><entry><title>Neuron facts</title><link href="http://johannesmik.github.io/neuron-facts.html" rel="alternate"></link><published>2014-05-15T10:20:00+02:00</published><updated>2014-05-15T10:20:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-05-15:/neuron-facts.html</id><summary type="html">&lt;p class="first last"&gt;Facts and quotes about neurons&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Some fun facts and quotes about neurons.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Most axons experimented with come from &lt;em&gt;Carcinus maenas&lt;/em&gt; (Gemeine Strandkrabbe)&lt;/li&gt;
+&lt;li&gt;"If somebody were to put a gun to the head of the author of this book and ask him to name the single most important concept in brain science, he would say it is the concept of a neuron." - Izhikevich, DSN&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+</content><category term="neurons"></category></entry><entry><title>Some ReST Tests</title><link href="http://johannesmik.github.io/rest-tests.html" rel="alternate"></link><published>2014-05-15T10:20:00+02:00</published><updated>2014-05-15T10:20:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-05-15:/rest-tests.html</id><summary type="html">&lt;p class="first last"&gt;This posts shows how to use ReST syntax&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;For future reference, I collect some ReST examples here. They serve as a reference for how to use the syntax and also show if the Pelican blog renders correctly.&lt;/p&gt;
+&lt;div class="section" id="kanji-and-japanese"&gt;
+&lt;h2&gt;Kanji and Japanese&lt;/h2&gt;
+&lt;p&gt;Now for some Japanese text:&lt;/p&gt;
+&lt;p&gt;こんにちは。　俺はヨハネスです。&lt;/p&gt;
+&lt;p&gt;Furigana are also supported: &lt;ruby&gt;&lt;rb&gt;世界&lt;/rb&gt;&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;せかい&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="html-code-block"&gt;
+&lt;h2&gt;HTML Code Block&lt;/h2&gt;
+&lt;!-- This is a rst comment --&gt;
+&lt;p&gt;A html code block with line numbers&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;code block example&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    Some more test text
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="python-code-block"&gt;
+&lt;h2&gt;Python code Block&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;'Hello world'&lt;/span&gt;
+&lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mf"&gt;5.4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;'hello world'&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="bash-code"&gt;
+&lt;h2&gt;Bash code&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;"hello"&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; World
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="math"&gt;
+&lt;h2&gt;Math&lt;/h2&gt;
+&lt;p&gt;This is $\epsilon_0$ some math code.&lt;/p&gt;
+&lt;p&gt;\begin{equation}
+\epsilon_0(s) = \frac{1}{1 - \tau_s / \tau_m}
+\left[ \exp (-\frac{s}{\tau_m}) - \exp ( -\frac{s}{\tau_s} ) \right]
+\end{equation}&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="other-code"&gt;
+&lt;h2&gt;Other Code&lt;/h2&gt;
+&lt;!-- --&gt;
+&lt;blockquote&gt;
+$ sudo apt-get install python&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="loading-whole-files"&gt;
+&lt;h2&gt;Loading whole files&lt;/h2&gt;
+&lt;p&gt;This is not supported at the moment. Maybe include it later, for example with the literalinclude directive.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="images"&gt;
+&lt;h2&gt;Images&lt;/h2&gt;
+&lt;div class="figure" style="width: 703px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Move for Deggendorf" src="http://johannesmik.github.io/images/movefordeggendorf.jpg" style="width: 703px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;This is the caption of the figure.&lt;/p&gt;
+&lt;div class="legend"&gt;
+The legend consists of all elements after the caption. In this case, the legend consists of this paragraph.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="some-boxes"&gt;
+&lt;h2&gt;Some Boxes&lt;/h2&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;A note box&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="admonition warning"&gt;
+&lt;p class="first admonition-title"&gt;Warning&lt;/p&gt;
+&lt;p class="last"&gt;A warning box&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="tests"></category></entry><entry><title>My first Kartoffelkombinat delivery</title><link href="http://johannesmik.github.io/first-kk-delivery.html" rel="alternate"></link><published>2014-05-15T00:00:00+02:00</published><updated>2014-05-15T00:00:00+02:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-05-15:/first-kk-delivery.html</id><summary type="html">&lt;p class="first last"&gt;My intentions of registering at Kartoffelkombinat, and description of my first delivery.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Last week I registered for a six-week long testing period of Kartoffelkombinat. Today I received my first delivery. Update: I finished the testing period and became a regular member until today.&lt;/p&gt;
+&lt;div class="section" id="what-is-kartoffelkombinat"&gt;
+&lt;h2&gt;What is Kartoffelkombinat?&lt;/h2&gt;
+&lt;p&gt;Kartoffelkombinat (KK) is a cooperative of local Munich people to grow and share regional and organic food. Every member pays a monthly fee (between 10 and 16 Euro) used to build a small farm in Eschenried, near Munich. In return, the members receive their share for the yield. In Germany, those coops are called 'Solidarische Landwirtschaft' (for solidaristic agriculture) or 'Solawi' in short. So from now on every Thursday a small crate of seasonal, regional and organic vegetables is dropped at a house in the neighborhood, which I can collect with my bicycle.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="my-intention-when-joining-kk"&gt;
+&lt;h2&gt;My intention when joining KK&lt;/h2&gt;
+&lt;p&gt;A friend of mine told me about the idea of food coops, he was really fascinated about them. Unluckily, his coop didn't deliver to my neighborhood, so I had to look for another one. And I found KK! :) It looks like they have dropping stations all over Munich so it may be a good idea for you, too.&lt;/p&gt;
+&lt;p&gt;When finally registering, I had 3 reasons in my mind.&lt;/p&gt;
+&lt;p&gt;First, I wanted to integrate high quality vegetables into my diet. My current diet is mostly vegetarian. I think I got a good balance on carbs (noodles and rice), on protein (nuts, peas, soy, beans), and on fats (coconut and olive oil). Every now and then I also eat (high-quality red) meat and dairy products, mostly when I'm not at home and can't cook by myself. I also have some vegetables in my diet, but it was always the same: onions, carrots, tomatoes and champignons. I definetely had to add a greater variety of vegetables in order to keep my micronutrient levels high :)&lt;/p&gt;
+&lt;p&gt;I think Kartoffelkombinat excellently fulfills my wish for more diverse vegetables. Furthermore, because the food comes from the region it doesn't have to stay in chilled trucks for days (like the food from Spain or Netherlands for example) and therefore it still contains a lot of nutrients. In general KK promises vegetables of high quality, as they are organically grown and the variation (Sorte) is hand-picked.&lt;/p&gt;
+&lt;p&gt;Second, I didn't like the capitalistic idea of the big food chains (like REWE, ALD, or LIDL) anymore. For them food is only a ware they trade and not something you need for living (btw: the German word 'Lebensmittel' captures this idea quite good; it can be translated as 'stuff for living'). Once, I was doing my groceries and pondered about their way of selling food, and also about preprocessed food. I don't want to explain my thinking here, but personally I came to the conclusion that I don't want to keep it that way; yes, that I want to change something.&lt;/p&gt;
+&lt;p&gt;I think by joining KK I can get a little bit more independent from this conventional way of buying food. I still have to do some groceries at the normal companies, but the feeling that I also support a regional farm is great. They also organise  Not only I support them financially, I can also help them by preparing the food deliveries for the next day. I want to do this at least once, because its a great opportunity to get to know the farm and it's people better. All in all I think KK cares a lot more about good food than companies.&lt;/p&gt;
+&lt;p&gt;Third, I think KK will teach me a lot about food. I will discover new, seasonal vegetables. I will learn how to prepare them right and cook a delicious meal out of it. I will learn how to conserve the food.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="my-first-delivery"&gt;
+&lt;h2&gt;My first delivery&lt;/h2&gt;
+&lt;p&gt;My first delivery was quite small. The reason for that was, that nearly all households had to be delivered. If you are in vaccation, you can draw up to 4 jokers, and you don't get a delivery (and don't have to pay for it). In this week only 14 jokers were used, normally its a bit more. The same food has to be shared amongst more deliveries, and that means slightly less for all.&lt;/p&gt;
+&lt;p&gt;My delivery contained purple carrots, potatoes, fresh garlic, Rettich, and Mangold (todo: looks live I have to translate all that food in English haha). It was all really tasty, and I especially liked the purple-haze carrots, they had a great taste :)&lt;/p&gt;
+&lt;div class="figure" style="width: 800px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Eine Lieferung" src="http://johannesmik.github.io/images/kk_lieferung1.jpg" style="width: 800px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;The first delivery.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure" style="width: 800px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Eine Lieferung" src="http://johannesmik.github.io/images/kk_lieferung2.jpg" style="width: 800px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;During summer, there were cherries, broccoli and carrots&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure" style="width: 800px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Eine Lieferung" src="http://johannesmik.github.io/images/kk_lieferung3.jpg" style="width: 800px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;In the late summer, finally, tomatoes! They are so yummy :)&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="food"></category></entry><entry><title>My first published photo!</title><link href="http://johannesmik.github.io/my-first-photo-newspaper.html" rel="alternate"></link><published>2014-03-10T00:00:00+01:00</published><updated>2014-03-10T00:00:00+01:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-03-10:/my-first-photo-newspaper.html</id><summary type="html">&lt;p class="first last"&gt;I just had my first photo in a German newspaper released. Yea! :)&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Yea! I just had my first photo in a German newspaper released.&lt;/p&gt;
+&lt;div class="figure" style="width: 700px; height: auto; max-width: 100%;"&gt;
+&lt;img alt="Parkourfoto in der Süddeutschen Zeitung." src="http://johannesmik.github.io/images/mehrvonderweltsehen.jpg" style="width: 700px; height: auto; max-width: 100%;"/&gt;
+&lt;p class="caption"&gt;Mehr von der Welt sehen&lt;/p&gt;
+&lt;div class="legend"&gt;
+Nadja Hahn is a practitioner of the Parkour discipline&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;It is covered in the article &lt;a class="reference external" href="http://www.sz-jugendseite.de/mehr-von-der-welt-sehen/"&gt;Mehr von der Welt sehen&lt;/a&gt; of Sueddeutsche Zeitung. The article is about my friend Nadja who talks about her parkour passion.&lt;/p&gt;
+</content><category term="photography"></category></entry><entry><title>Markdown Tests</title><link href="http://johannesmik.github.io/test-md.html" rel="alternate"></link><published>2014-03-03T10:20:00+01:00</published><updated>2017-03-03T10:20:00+01:00</updated><author><name>Johannes Mikulasch</name></author><id>tag:johannesmik.github.io,2014-03-03:/test-md.html</id><summary type="html">&lt;p&gt;Short version for index and feeds&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Heading&lt;/h1&gt;
+&lt;p&gt;Some content.&lt;/p&gt;
+&lt;h1&gt;Math&lt;/h1&gt;
+&lt;p&gt;This is some inline math &lt;span class="math"&gt;\(e=mc^2\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;And now some block test &lt;/p&gt;
+&lt;div class="math"&gt;$$x^2$$&lt;/div&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;div class="math"&gt;$$\epsilon = f(\alpha)$$&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    var location_protocol = (false) ? 'https' : document.location.protocol;
+    if (location_protocol !== 'http' &amp;&amp; location_protocol !== 'https') location_protocol = 'https:';
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="pelican"></category><category term="publishing"></category></entry></feed>
