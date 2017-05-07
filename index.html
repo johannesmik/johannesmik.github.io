@@ -25,110 +25,32 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="http://johannesmik.github.io/einstein-summations.html">Einstein summations</a></h2> 
+                    <h2><a href="http://johannesmik.github.io/self-introduction.html">Self Introduction (Japanese)</a></h2> 
 <footer class="post-info">
-        <abbr title="2015-08-10T14:20:00+02:00">
-                Mo 10 August 2015
+        <abbr title="2015-07-24T00:00:00+02:00">
+                Fr 24 Juli 2015
         </abbr>
                 by <a class="url fn" href="http://johannesmik.github.io/author/johannes-mikulasch.html">Johannes Mikulasch</a> 
-		in category <a href="http://johannesmik.github.io/category/technical.html">Technical</a>.
-<p>tags: <a href="http://johannesmik.github.io/tag/numpy.html">#numpy</a>&nbsp;</p>
-</footer><!-- /.post-info --><p>Einstein summations can be a nice way to downsize some tricky matrix multiplications in Numpy.</p>
-<h2>Applying a transformation T on many points</h2>
-<p>Suppose you have <span class="math">\(m\)</span> 4-dimensional points saved in a <span class="math">\(n \times 4\)</span> matrix, and now you want to apply a <span class="math">\(4 \times 4\)</span> transformation matrix <span class="math">\(T\)</span> to all the points. How would you do that? </p>
-<p>The simple <code>np.dot()</code> won't work, and I could not get it right with <code>np.tensordots()</code> either.</p>
-<p>So I used the Einstein summations.</p>
-<div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ij, klj -&gt; kli'</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-</pre></div>
-<p>The outcome will be: <span class="math">\(M_{kli} = \sum_j a_{ij} b_{klj}\)</span></p>
-<h4>Code Example:</h4>
-<p>(TODO example not complete)</p>
-<p>Traditional way</p>
-<p>Einstein summation</p>
-<div class="math">$$ \begin{matrix} 1 &amp; 0 &amp; 0 &amp; 2 \\\ 0 &amp; 1 &amp; 0 &amp; 0 \\\ 0 &amp; 0 &amp; 1 &amp; 0 \\\ 0 &amp; 0 &amp; 0 &amp; 1\end{matrix} \cdot $$</div>
-<h2>Runtime of Numpys Einstein summation</h2>
-<p>(TODO compare with C++ methods)</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
+		in category <a href="http://johannesmik.github.io/category/personal.html">Personal</a>.
+<p>tags: <a href="http://johannesmik.github.io/tag/japanese.html">#japanese</a>&nbsp;</p>Translations: 
+        <a href="http://johannesmik.github.io/self-introduction-jp.html">jp</a>
 
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-</script><p>There are <a href="http://johannesmik.github.io/einstein-summations.html#disqus_thread">comments</a>.</p>                </article>
+</footer><!-- /.post-info --><p>はじめまして。<ruby><rb>私</rb><rp>(</rp><rt>わたし</rt><rp>)</rp>はミクラシュ・ヨハネスと<ruby><rb>申</rb><rp>(</rp><rt>もう</rt><rp>)</rp>します。 今２８<ruby><rb>際</rb><rp>(</rp><rt>さい</rt><rp>)</rp>です。</p>
+<p><ruby><rb>専門</rb><rp>(</rp><rt>せんもん</rt><rp>)</rp>は<ruby><rb>情報科学</rb><rp>(</rp><rt>じょうほうかがく</rt><rp>)</rp>で、その中では<ruby><rb>人工知能</rb><rp>(</rp><rt>じんこうちのう</rt><rp>)</rp>やコンピュータビジョンを<ruby><rb>専攻</rb><rp>(</rp><rt>せんこう</rt><rp>)</rp>しています。</p>
+<p><ruby><rb>趣味</rb><rp>(</rp><rt>しゅみ</rt><rp>)</rp>は写真を撮ることやスポーツで走ったり跳んだりすることです。</p>
+<p><ruby><rb>一昨年</rb><rp>(</rp><rt>おととし</rt><rp>)</rp>に日本で４ヵ月間<ruby><rb>留学</rb><rp>(</rp><rt>りゅうがく</rt><rp>)</rp>をして、日本の生活に<ruby><rb>馴染</rb><rp>(</rp><rt>なじ</rt><rp>)</rp>みました。</p>
+<p>大学の研究室で勉強しました。とても楽しかったです。</p>
+<p>今年の<ruby><rb>９月</rb><rp>(</rp><rt>くがつ</rt><rp>)</rp>からもう一同日本に行きたいと思っています。なぜなら日本で働きたいからです。</p>
+<p><ruby><rb>情報科学</rb><rp>(</rp><rt>じょうほうかがく</rt><rp>)</rp>性のように、<ruby><rb>沢山</rb><rp>(</rp><rt>たくさん</rt><rp>)</rp>キャリアのチャンスがあると思います。</p>
+<p>ここで１０ヵ月間語学学校に行って、それから８ヵ月間インターンをしたいと思います。</p>
+<p>日本人のいい<ruby><rb>所</rb><rp>(</rp><rt>ところ</rt><rp>)</rp>は<ruby><rb>丁寧</rb><rp>(</rp><rt>ていねい</rt><rp>)</rp>な<ruby><rb>所</rb><rp>(</rp><rt>ところ</rt><rp>)</rp>です、たたえばお店の<ruby><rb>接客</rb><rp>(</rp><rt>せっきゃく</rt><rp>)</rp>などです。</p>
+<p>以上です。よろしくお願いします。</p>
+<p>There are <a href="http://johannesmik.github.io/self-introduction.html#disqus_thread">comments</a>.</p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="http://johannesmik.github.io/self-introduction.html" rel="bookmark"
-                           title="Permalink to Self Introduction (Japanese)">Self Introduction (Japanese)</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2015-07-24T00:00:00+02:00">
-                        Fr 24 Juli 2015
-                    </abbr>
-                    in category <a href="http://johannesmik.github.io/category/personal.html">Personal</a>.
-                </footer>        
-                <p class="first last">Self introduction in Japanese</p>
-
-<p>There are <a href="http://johannesmik.github.io/self-introduction.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
         
 
  
@@ -356,24 +278,6 @@
                 <p class="first last">I just had my first photo in a German newspaper released. Yea! :)</p>
 
 <p>There are <a href="http://johannesmik.github.io/my-first-photo-newspaper.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="http://johannesmik.github.io/test-md.html" rel="bookmark"
-                           title="Permalink to Markdown Tests">Markdown Tests</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2014-03-03T10:20:00+01:00">
-                        Mo 03 März 2014
-                    </abbr>
-                    in category <a href="http://johannesmik.github.io/category/technical.html">Technical</a>.
-                </footer>        
-                <p>Short version for index and feeds</p>
-<p>There are <a href="http://johannesmik.github.io/test-md.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
             </article></li>
             </ol><!-- /#posts-list -->
             </section><!-- /#content -->

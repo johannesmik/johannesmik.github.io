@@ -57,19 +57,15 @@ $ mkvirtualenv blog
 $ workon blog
 $ deactivate
 </pre>
-<p>I added this to <tt class="docutils literal"><span class="pre">~/.virtualenvs/postactivate</span></tt> script. That takes me to the right folder after <tt class="docutils literal">workon blog</tt>.:</p>
+<p>I added this to <tt class="docutils literal"><span class="pre">~/.virtualenvs/blog/bin/postactivate</span></tt> script. That takes me to the right folder after <tt class="docutils literal">workon blog</tt>.:</p>
 <pre class="literal-block">
-if [ "$(basename $VIRTUAL_ENV)" == "blog" ]; then
-    cd ~/workspace/blog
-fi
+cd ~/workspace/blog
 </pre>
 <p>The advantage is that I can (pip) install and update all the python packages I want without messing up my other projects.:</p>
 <pre class="literal-block">
 $ pip install pelican
-$ pip install ghp-import
 </pre>
-<p>Some other packages I needed.</p>
-<p>For the 'better_figures_and_images' plugin:</p>
+<p>And for the 'better_figures_and_images' plugin:</p>
 <blockquote>
 $ pip install pillow beautifulsoup4</blockquote>
 </div>
@@ -81,7 +77,6 @@ $ pip install pillow beautifulsoup4</blockquote>
 $ cd output
 $ git commit -a
 $ git push
-$ (git push --force)
 </pre>
 </div>
 <div class="section" id="old-git-workflow">
@@ -95,11 +90,9 @@ $ git remote add origin git@github.com:username/username.github.io.git
 <p>Then I can use the following commands to build and publish my page:</p>
 <pre class="literal-block">
 $ pelican content -o output -s pelicanconf.py
-$ ghp-import output -m "Commit message"
-$ git push origin gh-pages:master
+$ cd content
+$ git add / git commit / git push
 </pre>
-<p>The ghp-import command commits the output directory to a local branch called <tt class="docutils literal"><span class="pre">gh-pages</span></tt>.</p>
-<p>The push command pushes the local <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch (created by gh-import) to the <tt class="docutils literal">master</tt> branch of my github repo.</p>
 <p>Thats it.</p>
 </div>
 <p>There are <a href="http://johannesmik.github.io/pelican-workflow.html#disqus_thread">comments</a>.</p>                </article>

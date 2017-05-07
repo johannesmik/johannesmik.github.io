@@ -25,110 +25,42 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h2><a href="http://johannesmik.github.io/einstein-summations.html">Einstein summations</a></h2> 
+                    <h2><a href="http://johannesmik.github.io/numpy-yaml.html">Numpy and Yaml</a></h2> 
 <footer class="post-info">
-        <abbr title="2015-08-10T14:20:00+02:00">
-                Mo 10 August 2015
+        <abbr title="2015-07-19T14:20:00+02:00">
+                So 19 Juli 2015
         </abbr>
                 by <a class="url fn" href="http://johannesmik.github.io/author/johannes-mikulasch.html">Johannes Mikulasch</a> 
 		in category <a href="http://johannesmik.github.io/category/technical.html">Technical</a>.
-<p>tags: <a href="http://johannesmik.github.io/tag/numpy.html">#numpy</a>&nbsp;</p>
-</footer><!-- /.post-info --><p>Einstein summations can be a nice way to downsize some tricky matrix multiplications in Numpy.</p>
-<h2>Applying a transformation T on many points</h2>
-<p>Suppose you have <span class="math">\(m\)</span> 4-dimensional points saved in a <span class="math">\(n \times 4\)</span> matrix, and now you want to apply a <span class="math">\(4 \times 4\)</span> transformation matrix <span class="math">\(T\)</span> to all the points. How would you do that? </p>
-<p>The simple <code>np.dot()</code> won't work, and I could not get it right with <code>np.tensordots()</code> either.</p>
-<p>So I used the Einstein summations.</p>
-<div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ij, klj -&gt; kli'</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<p>tags: <a href="http://johannesmik.github.io/tag/numpy.html">#numpy</a>&nbsp;<a href="http://johannesmik.github.io/tag/yaml.html">#yaml</a>&nbsp;<a href="http://johannesmik.github.io/tag/python.html">#python</a>&nbsp;</p>
+</footer><!-- /.post-info --><p>The problem when dumping a numpy.float with yaml:</p>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
-<p>The outcome will be: <span class="math">\(M_{kli} = \sum_j a_{ij} b_{klj}\)</span></p>
-<h4>Code Example:</h4>
-<p>(TODO example not complete)</p>
-<p>Traditional way</p>
-<p>Einstein summation</p>
-<div class="math">$$ \begin{matrix} 1 &amp; 0 &amp; 0 &amp; 2 \\\ 0 &amp; 1 &amp; 0 &amp; 0 \\\ 0 &amp; 0 &amp; 1 &amp; 0 \\\ 0 &amp; 0 &amp; 0 &amp; 1\end{matrix} \cdot $$</div>
-<h2>Runtime of Numpys Einstein summation</h2>
-<p>(TODO compare with C++ methods)</p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
+<p>gives us the following error <code class="python-inline python"><span class="ne">TypeError</span><span class="p">:</span> <span class="n">data</span> <span class="nb">type</span> <span class="ow">not</span> <span class="n">understood</span></code>, because 'a' is of type <code class="python-inline python"><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span></code>.</p>
+<p>One solution is to add a representer to yaml:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">numpy_generic_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_scalar</span><span class="p">(</span><span class="s1">'tag:yaml.org,2002:float'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
 
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_multi_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">numpy_generic_representer</span><span class="p">)</span>
+</pre></div>
+<p>We use <code class="python-inline python"><span class="n">np</span><span class="o">.</span><span class="n">generic</span></code> instead of <code class="python-inline python"><span class="n">np</span><span class="o">.</span><span class="n">float32</span></code> because it's a base class for all scalar classes like <code class="python-inline python"><span class="n">float32</span></code> or <code class="python-inline python"><span class="n">float16</span></code>. The function <code class="python-inline python"><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></code> then returns a standard Python scalar.</p>
+<p>Similar we can add a representer for numpy arrays:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">array_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_sequence</span><span class="p">(</span><span class="s1">'!array'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
 
-    var mathjaxscript = document.createElement('script');
-    var location_protocol = (false) ? 'https' : document.location.protocol;
-    if (location_protocol !== 'http' && location_protocol !== 'https') location_protocol = 'https:';
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = location_protocol + '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config: ['MMLorHTML.js']," +
-        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
-        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
-        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
-        "    displayAlign: '"+ align +"'," +
-        "    displayIndent: '"+ indent +"'," +
-        "    showMathMenu: true," +
-        "    messageStyle: 'normal'," +
-        "    tex2jax: { " +
-        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
-        "        displayMath: [ ['$$','$$'] ]," +
-        "        processEscapes: true," +
-        "        preview: 'TeX'," +
-        "    }, " +
-        "    'HTML-CSS': { " +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
-        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
-        "    }, " +
-        "}); " +
-        "if ('default' !== 'default') {" +
-            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
-                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
-                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
-                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
-                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
-                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
-            "});" +
-        "}";
-    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
-}
-</script><p>There are <a href="http://johannesmik.github.io/einstein-summations.html#disqus_thread">comments</a>.</p>                </article>
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">array_representer</span><span class="p">)</span>
+</pre></div>
+<p>Where we use the <code class="python-inline python"><span class="n">tolist</span><span class="p">()</span></code> method to convert the array to a list, and then represent it as a sequence with a "!array" tag in front of it.</p>
+<p>When we load the file we can also construct arrays using:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">array_constructor</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">construct_sequence</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_constructor</span><span class="p">(</span><span class="s1">'!array'</span><span class="p">,</span> <span class="n">array_constructor</span><span class="p">)</span>
+</pre></div>
+<p>There are <a href="http://johannesmik.github.io/numpy-yaml.html#disqus_thread">comments</a>.</p>                </article>
             </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-        
-
- 
-            <li><article>    
-                <header>
-                    <h2><a href="http://johannesmik.github.io/numpy-yaml.html" rel="bookmark"
-                           title="Permalink to Numpy and Yaml">Numpy and Yaml</a></h2>
-                </header>
-                <div class="entry-content">
-                <footer class="post-info">
-                    <abbr title="2015-07-19T14:20:00+02:00">
-                        So 19 Juli 2015
-                    </abbr>
-                    in category <a href="http://johannesmik.github.io/category/technical.html">Technical</a>.
-                </footer>        
-                <p class="first last">Using yaml with numpy</p>
-
-<p>There are <a href="http://johannesmik.github.io/numpy-yaml.html#disqus_thread">comments</a>.</p>                </div><!-- /.entry-content -->
-            </article></li>
             </ol><!-- /#posts-list -->
             </section><!-- /#content -->
 	</div>
