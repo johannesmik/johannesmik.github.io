@@ -60,6 +60,9 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git add errorfile
 $ git commit --amend
 &lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This one shows a nice log of all changes that are visible in develop but not visible in master:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git shortlog master..develop
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="in-vim"&gt;
 &lt;h2&gt;In Vim&lt;/h2&gt;
